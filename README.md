@@ -1,31 +1,5 @@
 # TossingBotStudien
 
-# starten der Simulation:
-
-1. Schritt
-
-```bash
-cd panda_ws
-```
-
-2. Schritt
-
-```bash
-source devel/setup.bash
-```
-
-3. Schritt
-
-```bash
-roslaunch panda_gazebo start_simulation.launch
-```
-
-Code:
-
-```bash
-panda_ws/src/moveit_tutorials/doc/move_group_python_interface/scripts
-```
-
 ## Überblick
 
 ### Gazebo
@@ -161,4 +135,10 @@ ws_moveit/src$ wstool merge -t . https://raw.githubusercontent.com/moveit/moveit
 
 ```bash
 /ws_moveit$ roslaunch panda_gazebo start_simulation.launch
+```
+
+Der Code sollte in folgendem Pfad abgelegt werden:
+
+```bash
+ws_moveit/src/moveit_tutorials/doc/move_group_python_interface/scripts
 ```
