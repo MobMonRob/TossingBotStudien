@@ -36,14 +36,14 @@ MoveIt ist ideal für die Steuerung von Roboterarmen in der Industrieautomation,
 
 ## Wichtige Links
 
-- [Panda Gazebo Git Repo]: (https://github.com/rickstaa/panda-gazebo.git)
-- [Panda Gazebo getting started]: (https://rickstaa.dev/panda-gazebo/get_started/install.html)
-- [Moveit tutorials Git Repo]: (https://github.com/moveit/moveit_tutorials.git)
-- [Move group python Interface tutorial]: (https://github.com/moveit/moveit_tutorials/blob/master/doc/move_group_python_interface/move_group_python_interface_tutorial.rst)
-- [Move group python Interface tutorial Video]: (https://youtu.be/3MA5ebXPLsc)
-- [Catkin]: (http://wiki.ros.org/catkin)
-- [wstool]: (http://wiki.ros.org/wstool)
-- [ROS Getting started]: (https://www.ros.org/blog/getting-started/)
+- [Panda Gazebo Git Repo](https://github.com/rickstaa/panda-gazebo.git)
+- [Panda Gazebo getting started](https://rickstaa.dev/panda-gazebo/get_started/install.html)
+- [Moveit tutorials Git Repo](https://github.com/moveit/moveit_tutorials.git)
+- [Move group python Interface tutorial](https://github.com/moveit/moveit_tutorials/blob/master/doc/move_group_python_interface/move_group_python_interface_tutorial.rst)
+- [Move group python Interface tutorial Video](https://youtu.be/3MA5ebXPLsc)
+- [Catkin](http://wiki.ros.org/catkin)
+- [wstool](http://wiki.ros.org/wstool)
+- [ROS Getting started](https://www.ros.org/blog/getting-started/)
 
 ## Einrichten der Umgebung
 
