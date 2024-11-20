@@ -1,0 +1,32 @@
+<!--Starts the panda gazebo simulation-->
+<launch>
+  <!--General arguments-->
+  <arg name="rviz" default="true" doc="Start RViz"/>
+  <arg name="moveit" default="true" doc="Start MoveIt"/>
+  <!--Simulation arguments-->
+  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
+  <arg name="paused" default="true" doc="Start gazebo paused"/>
+  <arg name="verbose" default="false" doc="Enable Gazebo verbose mode"/>
+  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
+  <!--  The used phyics engine (options: dart and ode)-->
+  <arg name="physics" default="ode" doc="The physics engine used by gazebo"/>
+  <!--Control arguments-->
+  <!--  The control type used for controlling the robot (Options: Trajectory, position, effort)-->
+  <arg name="control_type" default="trajectory" doc="The type of control used for controlling the arm. Options: trajectory, position, effort"/>
+
+  <!--Start the Gazebo world-->
+  <include file="$(find panda_gazebo)/launch/start_world.launch.xml">
+    <arg name="world" value="$(arg world)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
+    <arg name="physics" value="$(arg physics)"/>
+  </include>
+
+  <!--Put the robot into the simulation-->
+  <include file="$(find panda_gazebo)/launch/put_robot_in_world.launch">
+    <arg name="rviz" value="$(arg rviz)"/>
+    <arg name="moveit" value="$(arg moveit)"/>
+    <arg name="control_type" value="$(arg control_type)"/>
+  </include>
+</launch>

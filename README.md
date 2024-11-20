@@ -145,9 +145,80 @@ ws_moveit/src/moveit_tutorials/doc/move_group_python_interface/scripts
 
 ## Simulationsumgebung konfigurieren
 
+### start_simulation.launch
+
+Die Datei liegt in folgendem Ordner:
+
+- _ws_moveit/src/panda-gazebo/panda_gazebo/launch/start_simulation.launch_
+
+Die Datei ist die "oberste" Ebende der Konfiguration der Simulation.
+
+Hier werden unter anderem
+
+- Die Simulations "Welt" Datei angegeben und
+- die launch file mit der der Roboter in die Umgebung geladen wird.
+
+Um die Weltdatei anzupassen muss folgender Abschnitt geändert werden:
+
+```xml
+  <!--Simulation arguments-->
+  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
+```
+
+für die launch Datei um den Roboter in die Simulation zu laden:
+
+```xml
+  <!--Put the robot into the simulation-->
+  <include file="$(find panda_gazebo)/launch/put_robot_in_world.launch">
+    <arg name="rviz" value="$(arg rviz)"/>
+    <arg name="moveit" value="$(arg moveit)"/>
+    <arg name="control_type" value="$(arg control_type)"/>
+  </include>
+```
+
+Die komplette start_simulation.launch sieht wie folgt aus:
+
+```xml
+<!--Starts the panda gazebo simulation-->
+<launch>
+  <!--General arguments-->
+  <arg name="rviz" default="true" doc="Start RViz"/>
+  <arg name="moveit" default="true" doc="Start MoveIt"/>
+  <!--Simulation arguments-->
+  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
+  <arg name="paused" default="true" doc="Start gazebo paused"/>
+  <arg name="verbose" default="false" doc="Enable Gazebo verbose mode"/>
+  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
+  <!--  The used phyics engine (options: dart and ode)-->
+  <arg name="physics" default="ode" doc="The physics engine used by gazebo"/>
+  <!--Control arguments-->
+  <!--  The control type used for controlling the robot (Options: Trajectory, position, effort)-->
+  <arg name="control_type" default="trajectory" doc="The type of control used for controlling the arm. Options: trajectory, position, effort"/>
+
+  <!--Start the Gazebo world-->
+  <include file="$(find panda_gazebo)/launch/start_world.launch.xml">
+    <arg name="world" value="$(arg world)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
+    <arg name="physics" value="$(arg physics)"/>
+  </include>
+
+  <!--Put the robot into the simulation-->
+  <include file="$(find panda_gazebo)/launch/put_robot_in_world.launch">
+    <arg name="rviz" value="$(arg rviz)"/>
+    <arg name="moveit" value="$(arg moveit)"/>
+    <arg name="control_type" value="$(arg control_type)"/>
+  </include>
+</launch>
+
+```
+
+### Anpassen der World Datei
+
 Um die Welt der Simulationsumgebung zu konfigurieren muss die folgende Datei angepasst werden:
 
-- ws_moveit/src/panda-gazebo/panda_gazebo/resources/worlds/empty.world
+- ws_moveit/src/panda-gazebo/panda_gazebo/resources/worlds/rahmlab_panda.world
 
 Mit den folgenden Zeilen definieren wir die Plattform und den Block der geworfen werden soll:
 
@@ -170,7 +241,7 @@ Im folgenden ein komplettes Beispiel der world mit Plattform und Block:
 ```xml
 <?xml version="1.0" ?>
 <sdf version="1.5">
-<world name="empty">
+<world name="rahmlab_panda">
 <!--A global light source-->
 <include>
 <uri>model://sun</uri>
@@ -205,6 +276,33 @@ Im folgenden ein komplettes Beispiel der world mit Plattform und Block:
 </sdf>
 ```
 
+Die World Datei wird in der _start_world.launch.xml_ Datei referenziert, hier muss der Pfad angepasst werden:
+
+```xml
+<!--Launch file for starting the empty gazebo environment-->
+<launch>
+  <!--Simulation arguments-->
+  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
+  <arg name="paused" default="true" doc="Start gazebo paused"/>
+  <arg name="verbose" default="false" doc="Enable Gazebo verbose mode"/>
+  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
+  <!--  The used phyics engine (options: dart and ode)-->
+  <arg name="physics" default="ode" doc="The physics engine used by gazebo"/> <!--Phyics engines: dart|ode-->
+
+  <!--Start the gazebo world-->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gazebo_gui)"/>
+    <arg name="physics" value="$(arg physics)"/>
+  </include>
+</launch>
+
+```
+
+### Roboter in Umgebung laden
+
 Nachdem die Simulationsumgebung angepasst wurde, müssen wir noch anpassen, wo sich der Roboter befindet.
 Durch die Plattform müssen wir diesen nach oben verschieben.
 
@@ -216,7 +314,7 @@ Hier können wir unter anderem die x y und z Koodinaten festlegen:
 
 ```xml
   <!--Gazebo specific options-->
-  <arg name="world" default="$(find panda_gazebo)/resources/worlds/empty.world" doc="Path to the world file"/>
+  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
   <arg name="gazebo" default="false" doc="Start Gazebo"/>
   <arg name="paused" default="false" doc="Start gazebo paused"/>
   <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
