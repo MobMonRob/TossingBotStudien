@@ -142,3 +142,65 @@ Der Code sollte in folgendem Pfad abgelegt werden:
 ```bash
 ws_moveit/src/moveit_tutorials/doc/move_group_python_interface/scripts
 ```
+
+## Simulationsumgebung konfigurieren
+
+Um die Welt der Simulationsumgebung zu konfigurieren muss die folgende Datei angepasst werden:
+
+- ws_moveit/src/panda-gazebo/panda_gazebo/resources/worlds/empty.world
+
+Mit den folgenden Zeilen definieren wir die Plattform und den Block der geworfen werden soll:
+
+```xml
+<!--A platform-->
+<include>
+<uri>model://platform</uri>
+<pose>0.4 0 0.209911 0 0 0</pose>
+</include>
+
+<!--A cube-->
+<include>
+<uri>model://cube</uri>
+<pose>0.4 0 0.419088 0 0 0</pose>
+</include>
+```
+
+Im folgenden ein komplettes Beispiel der world mit Plattform und Block:
+
+```xml
+<?xml version="1.0" ?>
+<sdf version="1.5">
+<world name="empty">
+<!--A global light source-->
+<include>
+<uri>model://sun</uri>
+</include>
+<!--A ground plane-->
+<include>
+<uri>model://ground_plane</uri>
+</include>
+<!--Hier werden die einzufügenden Objekte (Plattform, Würfel) beschrieben-->
+
+<!--A platform-->
+<include>
+<uri>model://platform</uri>
+<pose>0.4 0 0.209911 0 0 0</pose>
+</include>
+<!--A cube-->
+<include>
+<uri>model://cube</uri>
+<pose>0.4 0 0.419088 0 0 0</pose>
+</include>
+
+<!--Camera settings-->
+<gui fullscreen='0'>
+<camera name='user_camera'>
+<pose>1.59801 -1.66211 1.29545 -0 0.419643 2.23219</pose>
+<view_controller>orbit</view_controller>
+<projection_type>perspective</projection_type>
+</camera>
+</gui> <!--Load Panda joint fixer Gazebo world plugin-->
+<plugin name="panda_joint_locker" filename="libpanda_gazebo.so"/>
+</world>
+</sdf>
+```
