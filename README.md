@@ -204,3 +204,26 @@ Im folgenden ein komplettes Beispiel der world mit Plattform und Block:
 </world>
 </sdf>
 ```
+
+Nachdem die Simulationsumgebung angepasst wurde, müssen wir noch anpassen, wo sich der Roboter befindet.
+Durch die Plattform müssen wir diesen nach oben verschieben.
+
+Hierzu müssen wir folgende Datei anpassen:
+
+- ws_moveit/src/panda-gazebo/panda_gazebo/launch/put_robot_in_world.launch
+
+Hier können wir unter anderem die x y und z Koodinaten festlegen:
+
+```xml
+  <!--Gazebo specific options-->
+  <arg name="world" default="$(find panda_gazebo)/resources/worlds/empty.world" doc="Path to the world file"/>
+  <arg name="gazebo" default="false" doc="Start Gazebo"/>
+  <arg name="paused" default="false" doc="Start gazebo paused"/>
+  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
+  <arg name="x" default="0" doc="How far forward to place the base of the robot in [m]?"/>
+  <arg name="y" default="0" doc="How far leftwards to place the base of the robot in [m]?"/>
+  <arg name="z" default="0.419088" doc="How far upwards to place the base of the robot in [m]?"/>
+  <arg name="roll" default="0" doc="How much to rotate the base of the robot around its X-axis in [rad]?"/>
+  <arg name="pitch" default="0" doc="How much to rotate the base of the robot around its Y-axis in [rad]?"/>
+  <arg name="yaw" default="0" doc="How much to rotate the base of the robot around its Z-axis in [rad]?"/>
+```
