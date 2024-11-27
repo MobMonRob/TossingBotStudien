@@ -1,327 +1,243 @@
-# TossingBotStudien
+Hier ist die angepasste Anleitung mit dem Abschnitt über das Erstellen des ur5e_control-Pakets und das Hinzufügen des Python-Skripts:
 
-## Überblick
+markdown
+Code kopieren
 
-### Gazebo
+# Komplette Anleitung: UR5e-Roboter in Gazebo simulieren und mit Python steuern
 
-Gazebo ist ein Open-Source-Simulationswerkzeug, das hauptsächlich zur Modellierung und Simulation von Robotersystemen in realistischen 3D-Umgebungen verwendet wird. Es bietet Entwicklern die Möglichkeit, Robotikprojekte und autonome Systeme in einer sicheren, virtuellen Umgebung zu testen, bevor sie auf physische Roboter oder in die reale Welt übertragen werden.
+Diese Anleitung führt dich Schritt für Schritt durch die Einrichtung eines UR5e-Roboters in Gazebo, der Verwendung von MoveIt! zur Steuerung des Roboters und dem Erstellen eines Python-Skripts zur Steuerung.
 
-Integration mit ROS (Robot Operating System): Gazebo lässt sich eng mit dem Robot Operating System (ROS) integrieren, was es Entwicklern erleichtert, reale Robotersteuerungen und -algorithmen direkt in der Simulationsumgebung zu verwenden und zu testen.
+## 1. Installiere ROS Noetic und erforderliche Pakete
 
-- https://gazebosim.org/home
+Wenn ROS Noetic noch nicht installiert ist, folge den folgenden Schritten:
 
-### ROS
-
-Das Robot Operating System (ROS) ist eine Open-Source-Softwareplattform, die speziell für die Entwicklung von Roboteranwendungen konzipiert wurde. Bei einem Roboter müssen viele Komponenten reibungslos miteinander zusammen-arbeiten. Dazu zählen beispielsweise Motoren, Sensoren, Batterien und die verwendete Software. Das Robot Operating System (ROS) als kostenfreie Open Source Lösung stellt eine Vielfalt an Softwarebibliotheken und Werkzeugen zur Verfügung. Mit seiner Verwendung können Roboteranwendungen einfach erstellt werden. Von Treibern bis hin zu hochmodernen Algorithmen und leistungsstarken Entwicklertools bietet ROS alles, was für ein Robotikprojekt benötigt wird.
-
-- https://www.ros.org/
-- https://docs.ros.org/en/rolling/
-
-### RViz (ROS Visualization)
-
-RViz (kurz für ROS Visualization) ist ein Visualisierungstool für das Robot Operating System (ROS), das speziell entwickelt wurde, um Roboterentwicklern zu helfen, Sensordaten, Robotermodellbewegungen und Umgebungsinformationen grafisch darzustellen. Es bietet eine visuelle Plattform, auf der verschiedene Datenquellen in ROS in Echtzeit angezeigt und analysiert werden können, was es besonders hilfreich macht, um Roboterentwicklungen zu überwachen, zu debuggen und zu steuern.
-
-- https://wiki.ros.org/rviz
-
-### MoveIt
-
-MoveIt ist eine leistungsfähige Open-Source-Bibliothek und -Software für Bewegungsplanung und -steuerung von Robotern im Robot Operating System (ROS). Es bietet Roboterentwicklern und Forschern Werkzeuge zur Bewegungsplanung, Kollisionserkennung, Manipulation, Kinematik und Interaktion, um Roboterarme, mobile Roboter und hybride Systeme einfach und flexibel zu steuern.
-
-MoveIt ist ideal für die Steuerung von Roboterarmen in der Industrieautomation, um komplexe Aufgaben wie das Aufnehmen und Platzieren von Objekten, das Montieren von Komponenten oder das Sortieren von Waren auszuführen.
-
-- https://moveit.ai/
-- https://github.com/moveit/moveit_tutorials
-
-# Getting Started
-
-## Wichtige Links
-
-- [Panda Gazebo Git Repo](https://github.com/rickstaa/panda-gazebo.git)
-- [Panda Gazebo getting started](https://rickstaa.dev/panda-gazebo/get_started/install.html)
-- [Moveit tutorials Git Repo](https://github.com/moveit/moveit_tutorials.git)
-- [Move group python Interface tutorial](https://github.com/moveit/moveit_tutorials/blob/master/doc/move_group_python_interface/move_group_python_interface_tutorial.rst)
-- [Move group python Interface tutorial Video](https://youtu.be/3MA5ebXPLsc)
-- [Catkin](http://wiki.ros.org/catkin)
-- [wstool](http://wiki.ros.org/wstool)
-- [ROS Getting started](https://www.ros.org/blog/getting-started/)
-
-## Einrichten der Umgebung
+### 1.1 Installiere ROS Noetic
 
 ```bash
+# Füge ROS Noetic Repositories hinzu
+sudo sh -c 'echo "deb [arch=amd64] http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+# Setze den ROS-Repository-Schlüssel
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 0xB01FA116
+
+# Aktualisiere die Paketliste
 sudo apt update
-```
 
-```bash
+# Installiere die Desktop-Full-Version von ROS Noetic
 sudo apt install ros-noetic-desktop-full
-```
+sudo apt-get install ros-noetic-moveit ros-noetic-moveit-kinematics
+sudo apt-get install ros-noetic-trac-ik-kinematics-plugin
 
-```bash
+1.2 Installiere die notwendigen ROS-Pakete
+bash
+Code kopieren
+# Installiere ROS-Abhängigkeiten
+sudo apt install python3-rosdep python3-catkin-tools
+
+
+1.3 Initialisiere rosdep und aktualisiere:
+bash
+Code kopieren
+sudo rosdep init
 rosdep update
+
+
+2. Erstelle einen Catkin-Workspace
+Falls du noch keinen Workspace eingerichtet hast, erstelle nun einen:
+
+bash
+Code kopieren
+# Gehe zum Home-Verzeichnis und erstelle einen Workspace
+cd ~
+mkdir -p ur5e_ws/src
+cd ur5e_ws/src
+catkin_init_workspace
+
+
+3. Klone die notwendigen Repositories für den UR5e
+3.1 Klone das Universal Robots GitHub-Repository
+bash
+Code kopieren
+
+# Klone das Universal Robot Repository (für Gazebo und MoveIt! Unterstützung)
+git clone https://github.com/ros-industrial/universal_robot.git
+
+
+3.2 MoveIt!-Konfiguration für den UR5e-Roboter
+Die MoveIt!-Konfiguration für den UR5e-Roboter ist bereits im universal_robot-Repository enthalten. Du musst diese Konfiguration nicht manuell kopieren oder verschieben, sondern sie befindet sich direkt im ur5e_moveit_config Ordner.
+
+Die MoveIt!-Konfigurationsdateien sind unter folgendem Pfad zu finden:
+
+bash
+Code kopieren
+~/ur5e_ws/src/universal_robot/ur5e_moveit_config
+3.3 Weitere Repositories hinzufügen (optional)
+Falls du zusätzliche Repositories benötigst, z. B. für Gazebo oder andere ROS-Pakete, kannst du diese jetzt hinzufügen.
+
+4. Installiere alle Abhängigkeiten
+Installiere die Abhängigkeiten für den Workspace:
+
+bash
+Code kopieren
+cd ~/ur5e_ws
+rosdep install --from-paths src --ignore-src -r -y
+
+
+5. Baue den Catkin-Workspace
+Baue deinen Workspace mit catkin_make:
+
+bash
+Code kopieren
+cd ~/ur5e_ws
+catkin_make
+Lade anschließend die ROS-Umgebungsvariablen:
+
+bash
+Code kopieren
+source devel/setup.bash
+6. Starte Gazebo mit dem UR5e-Roboter
+Starte nun Gazebo, um die Simulation des UR5e-Roboters zu starten:
+
+bash
+Code kopieren
+roslaunch ur_gazebo ur5e_bringup.launch
+Dies öffnet Gazebo und lädt das UR5e-Modell.
+
+7. Starte MoveIt! für den UR5e-Roboter
+Nun starte MoveIt!, um den Roboter zu steuern:
+
+bash
+Code kopieren
+roslaunch ur5e_moveit_config moveit_planning_execution.launch sim:=true
+Dieser Befehl startet MoveIt! in Verbindung mit Gazebo, sodass du den Roboter über die MoveIt!-Planung steuern kannst.
+
+8. Erstelle das ur5e_control-Paket und Python-Skript
+Falls das Paket ur5e_control noch nicht existiert, kannst du es erstellen. Hier sind die Schritte:
+
+8.1 Erstelle das Paket ur5e_control
+Wechsle in das src-Verzeichnis deines Workspaces und erstelle das ur5e_control-Paket:
+
+bash
+Code kopieren
+cd ~/ur5e_ws/src
+catkin_create_pkg ur5e_control rospy moveit_commander std_msgs
+rospy: Wird benötigt, um ROS mit Python zu verwenden.
+moveit_commander: Die Python-Bibliothek zur Kommunikation mit MoveIt!.
+std_msgs: Standard-Meldungstypen in ROS.
+
+
+8.2 Erstelle das Python-Skript move_robot.py
+Erstelle einen Ordner scripts im ur5e_control-Paket, falls dieser nicht existiert:
+
+bash
+Code kopieren
+mkdir ~/ur5e_ws/src/ur5e_control/scripts
+Erstelle das Python-Skript move_robot.py im scripts-Ordner:
+
+bash
+Code kopieren
+touch ~/ur5e_ws/src/ur5e_control/scripts/move_robot.py
+Bearbeite das Skript move_robot.py:
+
+python
+Code kopieren
+#!/usr/bin/env python3
+
+import sys
+import rospy
+import moveit_commander
+from moveit_commander import PlanningSceneInterface
+
+def main(): # Initialisiere MoveIt! und ROS
+moveit_commander.roscpp_initialize(sys.argv)
+rospy.init_node('move_robot', anonymous=True)
+
+    # Roboter-Planungsgruppe und Umgebung einrichten
+    group_name = "manipulator"  # Die Planungsgruppe für den UR5e
+    move_group = moveit_commander.MoveGroupCommander(group_name)
+    scene = moveit_commander.PlanningSceneInterface()
+
+    # Hole aktuelle Position des Roboters
+    current_joint_values = move_group.get_current_joint_values()
+    rospy.loginfo("Aktuelle Gelenkwerte: %s", current_joint_values)
+
+    # Setze Zielposition auf "home" (vordefiniert in der MoveIt!-Konfiguration)
+    move_group.set_named_target("home")
+    rospy.loginfo("Bewege Roboter zur Home-Position...")
+    plan = move_group.go(wait=True)
+
+    # Gib an, dass der Roboter zur Home-Position bewegt wurde
+    if plan:
+        rospy.loginfo("Roboter erfolgreich in Home-Position bewegt!")
+    else:
+        rospy.logwarn("Fehler beim Bewegen des Roboters zur Home-Position")
+
+    # Jetzt definieren wir eine benutzerdefinierte Zielposition (Bewegung über Gelenkwerte)
+    joint_goal = move_group.get_current_joint_values()
+
+    # Setze neue Zielgelenkwerte (Beispielwerte, du kannst diese ändern)
+    joint_goal[0] = -1.57  # Schulter-Pan-Gelenk
+    joint_goal[1] = -1.57  # Schulter-Lift-Gelenk
+    joint_goal[2] = 1.57   # Ellbogen-Gelenk
+    joint_goal[3] = -1.57  # Handgelenk 1
+    joint_goal[4] = 1.57   # Handgelenk 2
+    joint_goal[5] = 0.0    # Handgelenk 3
+
+    # Bewege den Roboter zu dieser neuen Zielposition
+    move_group.set_joint_value_target(joint_goal)
+    rospy.loginfo("Bewege Roboter zu benutzerdefinierten Zielwerten...")
+    plan = move_group.go(wait=True)
+
+    # Gib an, ob der Roboter erfolgreich zu der Zielposition bewegt wurde
+    if plan:
+        rospy.loginfo("Roboter erfolgreich zur Zielposition bewegt!")
+    else:
+        rospy.logwarn("Fehler beim Bewegen des Roboters zur Zielposition")
+
+    # Beende MoveIt!
+    moveit_commander.roscpp_shutdown()
+
+if **name** == '**main**':
+main()
 ```
 
-```bash
-sudo apt update
-```
+8.3 Mach das Skript ausführbar
+Stelle sicher, dass das Skript ausführbar ist:
 
-```bash
-sudo apt install ros-noetic-catkin python3-catkin-tools
-```
+bash
+Code kopieren
+chmod +x ~/ur5e_ws/src/ur5e_control/scripts/move_robot.py 9. Baue den Workspace erneut
+Wechsle in das Workspace-Verzeichnis und baue den Workspace erneut:
 
-```bash
-udo apt install python3-wstool
-```
+bash
+Code kopieren
+cd ~/ur5e_ws
+catkin_make
+Lade anschließend die ROS-Umgebungsvariablen:
 
-```bash
-mkdir -p ~/ws_moveit/src
-```
+bash
+Code kopieren
+source devel/setup.bash
 
-```bash
-cd ws_moveit/src
-```
+10. Führe das Python-Skript aus
+    Nun solltest du das Python-Skript ausführen können, um den Roboter zu bewegen:
 
-```bash
-ws_moveit/src$ wstool init .
-```
+bash
+Code kopieren
+rosrun ur5e_control move_robot.py
 
-```bash
-ws_moveit/src$ wstool merge -t . https://raw.githubusercontent.com/moveit/moveit/master/moveit.rosinstall
-```
+################################################################
 
-```bash
-/ws_moveit/src$ wstool remove moveit_tutorials
-```
+# Starten der Simulation und des Skriptes
 
-```bash
-/ws_moveit/src$ wstool update -t .
-```
+´´´bash
+roslaunch ur_gazebo ur5e_bringup.launch
 
-```bash
-/ws_moveit/src$ git clone https://github.com/moveit/moveit_tutorials.git -b master
-```
+roslaunch ur5e_moveit_config moveit_planning_execution.launch sim:=true
 
-```bash
-/ws_moveit$ catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release
-```
-
-```bash
-/ws_moveit$ catkin build
-```
-
-```bash
-/ws_moveit/src$ git clone --recurse-submodules https://github.com/rickstaa/panda-gazebo.git
-```
-
-```bash
-/ws_moveit$ rosdep install --from-path src --ignore-src -r -y
-```
-
-```bash
-/ws_moveit$ catkin build -j4 -DCMAKE_BUILD_TYPE=Release
-```
-
-```bash
-/ws_moveit$ source ~/ws_moveit/devel/setup.bash
-```
-
-```bash
-/ws_moveit$ roslaunch panda_gazebo start_simulation.launch
-```
-
-## Starten der Umgebung
-
-```bash
-/ws_moveit$ source ~/ws_moveit/devel/setup.bash
-```
-
-```bash
-/ws_moveit$ roslaunch panda_gazebo start_simulation.launch
-```
-
-Der Code sollte in folgendem Pfad abgelegt werden:
-
-```bash
-ws_moveit/src/moveit_tutorials/doc/move_group_python_interface/scripts
-```
-
-## Simulationsumgebung konfigurieren
-
-### start_simulation.launch
-
-Die Datei liegt in folgendem Ordner:
-
-- _ws_moveit/src/panda-gazebo/panda_gazebo/launch/start_simulation.launch_
-
-Die Datei ist die "oberste" Ebende der Konfiguration der Simulation.
-
-Hier werden unter anderem
-
-- Die Simulations "Welt" Datei angegeben und
-- die launch file mit der der Roboter in die Umgebung geladen wird.
-
-Um die Weltdatei anzupassen muss folgender Abschnitt geändert werden:
-
-```xml
-  <!--Simulation arguments-->
-  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
-```
-
-für die launch Datei um den Roboter in die Simulation zu laden:
-
-```xml
-  <!--Put the robot into the simulation-->
-  <include file="$(find panda_gazebo)/launch/put_robot_in_world.launch">
-    <arg name="rviz" value="$(arg rviz)"/>
-    <arg name="moveit" value="$(arg moveit)"/>
-    <arg name="control_type" value="$(arg control_type)"/>
-  </include>
-```
-
-Die komplette start_simulation.launch sieht wie folgt aus:
-
-```xml
-<!--Starts the panda gazebo simulation-->
-<launch>
-  <!--General arguments-->
-  <arg name="rviz" default="true" doc="Start RViz"/>
-  <arg name="moveit" default="true" doc="Start MoveIt"/>
-  <!--Simulation arguments-->
-  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
-  <arg name="paused" default="true" doc="Start gazebo paused"/>
-  <arg name="verbose" default="false" doc="Enable Gazebo verbose mode"/>
-  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
-  <!--  The used phyics engine (options: dart and ode)-->
-  <arg name="physics" default="ode" doc="The physics engine used by gazebo"/>
-  <!--Control arguments-->
-  <!--  The control type used for controlling the robot (Options: Trajectory, position, effort)-->
-  <arg name="control_type" default="trajectory" doc="The type of control used for controlling the arm. Options: trajectory, position, effort"/>
-
-  <!--Start the Gazebo world-->
-  <include file="$(find panda_gazebo)/launch/start_world.launch.xml">
-    <arg name="world" value="$(arg world)"/>
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="verbose" value="$(arg verbose)"/>
-    <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
-    <arg name="physics" value="$(arg physics)"/>
-  </include>
-
-  <!--Put the robot into the simulation-->
-  <include file="$(find panda_gazebo)/launch/put_robot_in_world.launch">
-    <arg name="rviz" value="$(arg rviz)"/>
-    <arg name="moveit" value="$(arg moveit)"/>
-    <arg name="control_type" value="$(arg control_type)"/>
-  </include>
-</launch>
-
-```
-
-### Anpassen der World Datei
-
-Um die Welt der Simulationsumgebung zu konfigurieren muss die folgende Datei angepasst werden:
-
-- ws_moveit/src/panda-gazebo/panda_gazebo/resources/worlds/rahmlab_panda.world
-
-Mit den folgenden Zeilen definieren wir die Plattform und den Block der geworfen werden soll:
-
-```xml
-<!--A platform-->
-<include>
-<uri>model://platform</uri>
-<pose>0.4 0 0.209911 0 0 0</pose>
-</include>
-
-<!--A cube-->
-<include>
-<uri>model://cube</uri>
-<pose>0.4 0 0.419088 0 0 0</pose>
-</include>
-```
-
-Im folgenden ein komplettes Beispiel der world mit Plattform und Block:
-
-```xml
-<?xml version="1.0" ?>
-<sdf version="1.5">
-<world name="rahmlab_panda">
-<!--A global light source-->
-<include>
-<uri>model://sun</uri>
-</include>
-<!--A ground plane-->
-<include>
-<uri>model://ground_plane</uri>
-</include>
-<!--Hier werden die einzufügenden Objekte (Plattform, Würfel) beschrieben-->
-
-<!--A platform-->
-<include>
-<uri>model://platform</uri>
-<pose>0.4 0 0.209911 0 0 0</pose>
-</include>
-<!--A cube-->
-<include>
-<uri>model://cube</uri>
-<pose>0.4 0 0.419088 0 0 0</pose>
-</include>
-
-<!--Camera settings-->
-<gui fullscreen='0'>
-<camera name='user_camera'>
-<pose>1.59801 -1.66211 1.29545 -0 0.419643 2.23219</pose>
-<view_controller>orbit</view_controller>
-<projection_type>perspective</projection_type>
-</camera>
-</gui> <!--Load Panda joint fixer Gazebo world plugin-->
-<plugin name="panda_joint_locker" filename="libpanda_gazebo.so"/>
-</world>
-</sdf>
-```
-
-Die World Datei wird in der _start_world.launch.xml_ Datei referenziert, hier muss der Pfad angepasst werden:
-
-```xml
-<!--Launch file for starting the empty gazebo environment-->
-<launch>
-  <!--Simulation arguments-->
-  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
-  <arg name="paused" default="true" doc="Start gazebo paused"/>
-  <arg name="verbose" default="false" doc="Enable Gazebo verbose mode"/>
-  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
-  <!--  The used phyics engine (options: dart and ode)-->
-  <arg name="physics" default="ode" doc="The physics engine used by gazebo"/> <!--Phyics engines: dart|ode-->
-
-  <!--Start the gazebo world-->
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(arg world)"/>
-    <arg name="verbose" value="$(arg verbose)"/>
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="gui" value="$(arg gazebo_gui)"/>
-    <arg name="physics" value="$(arg physics)"/>
-  </include>
-</launch>
+rosrun ur5e_control move_robot.py
 
 ```
 
-### Roboter in Umgebung laden
-
-Nachdem die Simulationsumgebung angepasst wurde, müssen wir noch anpassen, wo sich der Roboter befindet.
-Durch die Plattform müssen wir diesen nach oben verschieben.
-
-Hierzu müssen wir folgende Datei anpassen:
-
-- ws_moveit/src/panda-gazebo/panda_gazebo/launch/put_robot_in_world.launch
-
-Hier können wir unter anderem die x y und z Koodinaten festlegen:
-
-```xml
-  <!--Gazebo specific options-->
-  <arg name="world" default="$(find panda_gazebo)/resources/worlds/rahmlab_panda.world" doc="Path to the world file"/>
-  <arg name="gazebo" default="false" doc="Start Gazebo"/>
-  <arg name="paused" default="false" doc="Start gazebo paused"/>
-  <arg name="gazebo_gui" default="true" doc="Start the gazebo GUI"/>
-  <arg name="x" default="0" doc="How far forward to place the base of the robot in [m]?"/>
-  <arg name="y" default="0" doc="How far leftwards to place the base of the robot in [m]?"/>
-  <arg name="z" default="0.419088" doc="How far upwards to place the base of the robot in [m]?"/>
-  <arg name="roll" default="0" doc="How much to rotate the base of the robot around its X-axis in [rad]?"/>
-  <arg name="pitch" default="0" doc="How much to rotate the base of the robot around its Y-axis in [rad]?"/>
-  <arg name="yaw" default="0" doc="How much to rotate the base of the robot around its Z-axis in [rad]?"/>
+################################################################
 ```
