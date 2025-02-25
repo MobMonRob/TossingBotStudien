@@ -231,13 +231,11 @@ rosrun ur5e_control move_robot.py
 # Starten der Simulation und des Skriptes
 
 ´´´bash
+
 roslaunch ur_gazebo ur5e_bringup.launch
 
 roslaunch ur5e_moveit_config moveit_planning_execution.launch sim:=true
 
 rosrun ur5e_control move_robot.py
 
-```
-
-################################################################
 ```
