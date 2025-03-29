@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <param name="robot_description" textfile="$(find ur5_rg2_ign)/urdf/ur5_rg2.urdf" />
+  <param name="robot_description_semantic" textfile="$(find ur5_rg2_ign)/config/ur5_rg2.srdf" />
+  
+  <!-- Load updated joint limits (override the values in the URDF) -->
+  <group ns="robot_description_planning">
+    <rosparam command="load" file="$(find ur5_rg2_ign)/config/joint_limits.yaml"/>
+  </group>
+  
+  <!-- Load kinematics.yaml -->
+  <group ns="robot_description_kinematics">
+    <rosparam command="load" file="$(find ur5_rg2_ign)/config/kinematics.yaml"/>
+  </group>
+  
+  <!-- Run the main MoveIt executable -->
+  <include file="$(find moveit_ros_move_group)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find moveit_ros_visualization)/launch/moveit_rviz.launch">
+    <arg name="config" value="true"/>
+    <arg name="debug" value="false"/>
+  </include>
+</launch> 

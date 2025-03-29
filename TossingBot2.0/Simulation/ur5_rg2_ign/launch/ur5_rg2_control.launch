@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Optional launch prefix for controller spawner -->
+  <arg name="launch_prefix" default="" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find ur5_rg2_ign)/config/ur5_rg2_control.yaml" command="load"/>
+
+  <!-- Load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="joint_state_controller
+                          shoulder_pan_joint_position_controller
+                          shoulder_lift_joint_position_controller
+                          elbow_joint_position_controller
+                          wrist_1_joint_position_controller
+                          wrist_2_joint_position_controller
+                          wrist_3_joint_position_controller
+                          rg2_finger_joint1_position_controller
+                          rg2_finger_joint2_position_controller"
+    launch-prefix="$(arg launch_prefix)" />
+</launch> 
