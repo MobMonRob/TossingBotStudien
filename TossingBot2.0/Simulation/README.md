@@ -1,12 +1,14 @@
-# Komplette Anleitung: UR5e-Roboter in Gazebo simulieren und mit Python steuern
+# 🤖 UR5e-Roboter Wurfsimulator
 
-Diese Anleitung führt dich Schritt für Schritt durch die Einrichtung eines UR5e-Roboters in Gazebo, der Verwendung von MoveIt! zur Steuerung des Roboters und dem Erstellen eines Python-Skripts zur Steuerung.
+Diese Simulationsumgebung ermöglicht die präzise Simulation von Wurfbewegungen eines UR5e-Roboterarms mit RG2-Greifer in Gazebo. Sie wurde für wissenschaftliche Untersuchungen von Roboterwurfbewegungen entwickelt und bietet eine realitätsnahe Modellierung der Roboterdynamik.
 
-## 1. Installiere ROS Noetic und erforderliche Pakete
+## 🛠️ Installation und Systemeinrichtung
 
-Wenn ROS Noetic noch nicht installiert ist, folge den folgenden Schritten:
+Die Einrichtung der Simulationsumgebung erfordert mehrere Schritte, die systematisch durchgeführt werden müssen:
 
-### 1.1 Installiere ROS Noetic
+### 🐢 ROS-Umgebung
+
+Als Grundlage dient ROS Noetic, das auf Ubuntu 20.04 installiert werden muss. Die Installation umfasst zusätzliche Pakete wie MoveIt! und die entsprechenden Kinematik-Plugins:
 
 ```bash
 # Füge ROS Noetic Repositories hinzu
@@ -24,23 +26,9 @@ sudo apt-get install ros-noetic-moveit ros-noetic-moveit-kinematics
 sudo apt-get install ros-noetic-trac-ik-kinematics-plugin
 ```
 
-### 1.2 Installiere die notwendigen ROS-Pakete
+### 📂 Workspace-Erstellung
 
-```bash
-# Installiere ROS-Abhängigkeiten
-sudo apt install python3-rosdep python3-catkin-tools
-```
-
-### 1.3 Initialisiere rosdep und aktualisiere:
-
-```bash
-sudo rosdep init
-rosdep update
-```
-
-## 2. Erstelle einen Catkin-Workspace
-
-Falls du noch keinen Workspace eingerichtet hast, erstelle nun einen:
+Ein Catkin-Workspace muss erstellt werden, der als Container für alle relevanten Pakete dient:
 
 ```bash
 # Gehe zum Home-Verzeichnis und erstelle einen Workspace
@@ -50,213 +38,114 @@ cd ur5e_ws/src
 catkin_init_workspace
 ```
 
-## 3. Klone die notwendigen Repositories für den UR5e
+### 📦 Paketinstallation
 
-### 3.1 Klone das Universal Robots GitHub-Repository
+Das `ur5_rg2_ign`-Paket, das im Verzeichnis `TossingBot2.0/Simulation/ur5_rg2_ign` enthalten ist, muss in den Workspace integriert werden. Dieses Paket enthält sämtliche Beschreibungsdateien, Steuerskripte und Konfigurationen für den UR5e mit RG2 Greifer.
 
-```bash
-# Klone das Universal Robot Repository (für Gazebo und MoveIt! Unterstützung)
-git clone https://github.com/ros-industrial/universal_robot.git
-```
+### 🔄 Abhängigkeiten installieren
 
-### 3.2 MoveIt!-Konfiguration für den UR5e-Roboter
-
-Die MoveIt!-Konfiguration für den UR5e-Roboter ist bereits im universal_robot-Repository enthalten. Du musst diese Konfiguration nicht manuell kopieren oder verschieben, sondern sie befindet sich direkt im ur5e_moveit_config Ordner.
-
-Die MoveIt!-Konfigurationsdateien sind unter folgendem Pfad zu finden:
-
-```bash
-~/ur5e_ws/src/universal_robot/ur5e_moveit_config
-```
-
-### 3.3 Weitere Repositories hinzufügen (optional)
-
-Falls du zusätzliche Repositories benötigst, z. B. für Gazebo oder andere ROS-Pakete, kannst du diese jetzt hinzufügen.
-
-## 4. Installiere alle Abhängigkeiten
-
-Installiere die Abhängigkeiten für den Workspace:
+Nach dem Klonen des Repositories müssen alle Abhängigkeiten installiert werden:
 
 ```bash
 cd ~/ur5e_ws
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-## 5. Baue den Catkin-Workspace
+### 🔨 Workspace kompilieren
 
-Baue deinen Workspace mit catkin_make:
+Der Workspace wird mit `catkin_make` kompiliert und anschließend in die Umgebung geladen:
 
 ```bash
 cd ~/ur5e_ws
 catkin_make
-```
-
-Lade anschließend die ROS-Umgebungsvariablen:
-
-```bash
 source devel/setup.bash
 ```
 
-## 6. Starte Gazebo mit dem UR5e-Roboter
+## 🗂️ Komponentenübersicht und Dateifunktionen
 
-Starte nun Gazebo, um die Simulation des UR5e-Roboters zu starten:
+Das Simulationspaket `ur5_rg2_ign` ist hierarchisch strukturiert und enthält mehrere wichtige Komponenten:
 
-```bash
-roslaunch ur_gazebo ur5e_bringup.launch
-```
+### 📝 URDF/SDF-Modellbeschreibungen
 
-Dies öffnet Gazebo und lädt das UR5e-Modell.
+- **`urdf/ur5_rg2.urdf`**: Diese Datei enthält die vollständige kinematische und dynamische Beschreibung des UR5e-Roboters mit RG2-Greifer im URDF-Format (Unified Robot Description Format). Sie definiert die Gelenkverbindungen, visuellen Komponenten, Kollisionsgeometrien sowie Trägheitseigenschaften aller Roboterteile. Diese Datei ist fundamental für die korrekte physikalische Simulation des Roboters.
+- **`ur5_rg2/model.sdf`**: SDF-Beschreibung (Simulation Description Format) des Roboters für die Ignition-Gazebo-Umgebung, die detaillierte dynamische Parameter wie Dämpfung und Reibung für realistische Bewegungssimulation enthält.
 
-## 7. Starte MoveIt! für den UR5e-Roboter
+### 🎨 Mesh-Dateien
 
-Nun starte MoveIt!, um den Roboter zu steuern:
+- **`ur5_rg2/meshes/visual/*.dae`**: COLLADA-Dateien für die visuelle Darstellung des Roboters mit detaillierten Texturen und Materialien.
+- **`ur5_rg2/meshes/collision/*.stl`**: Vereinfachte STL-Geometrien für effiziente Kollisionserkennung, die den Rechenaufwand während der Simulation reduzieren.
 
-```bash
-roslaunch ur5e_moveit_config moveit_planning_execution.launch sim:=true
-```
+### 🚀 Launch-Dateien
 
-Dieser Befehl startet MoveIt! in Verbindung mit Gazebo, sodass du den Roboter über die MoveIt!-Planung steuern kannst.
+- **`launch/ur5_rg2_bringup.launch`**: Startet die grundlegende Robotersimulation ohne zusätzliche Steuerungskomponenten.
+- **`launch/ur5_rg2_control.launch`**: Initialisiert die Gelenksteuerung für den Roboter mit entsprechenden Controllern.
+- **`launch/ur5_rg2_moveit.launch`**: Startet MoveIt! für die Bewegungsplanung und -kontrolle des Roboters.
+- **`launch/ur5_rg2_bringup_moveit.launch`**: Kombinierte Launch-Datei, die sowohl den Roboter als auch MoveIt! in einem Schritt startet.
+- **`launch/ur5_rg2_gazebo.launch`**: Startet die vollständige Gazebo-Simulation mit dem UR5e-Roboter in einer anpassbaren Umgebung.
+- **`launch/empty_world.world`**: Definiert die Simulationsumgebung mit physikalischen Eigenschaften wie Gravitation und Beleuchtung.
 
-## 8. Erstelle das ur5e_control-Paket und Python-Skript
+### 💻 Skripte für Robotersteuerung
 
-Falls das Paket ur5e_control noch nicht existiert, kannst du es erstellen. Hier sind die Schritte:
-
-### 8.1 Erstelle das Paket ur5e_control
-
-Wechsle in das src-Verzeichnis deines Workspaces und erstelle das ur5e_control-Paket:
-
-```bash
-cd ~/ur5e_ws/src
-catkin_create_pkg ur5e_control rospy moveit_commander std_msgs
-```
-
-- rospy: Wird benötigt, um ROS mit Python zu verwenden.
-- moveit_commander: Die Python-Bibliothek zur Kommunikation mit MoveIt!.
-- std_msgs: Standard-Meldungstypen in ROS.
-
-### 8.2 Erstelle das Python-Skript move_robot.py
-
-Erstelle einen Ordner scripts im ur5e_control-Paket, falls dieser nicht existiert:
-
-```bash
-mkdir ~/ur5e_ws/src/ur5e_control/scripts
-```
-
-Erstelle das Python-Skript move_robot.py im scripts-Ordner:
-
-```bash
-touch ~/ur5e_ws/src/ur5e_control/scripts/move_robot.py
-```
-
-Bearbeite das Skript move_robot.py:
+- **`scripts/estimate_inertial_properties.py`**: Berechnet die Trägheitseigenschaften aller Roboterkomponenten basierend auf einer Gesamtmasse von 18,4 kg für den UR5e und 0,78 kg für den RG2 Greifer, was für eine realistische Simulation der Dynamik unerlässlich ist.
+- **`scripts/test_gripper.py`**: Testet die Greiferfunktionalität durch definierte Öffnungs- und Schließbewegungen.
+- **`scripts/pick_ball.py`**: Implementiert eine vollständige Pick-and-Throw-Sequenz, die den Roboter einen Ball greifen und mit einer definierten Trajektorie werfen lässt. Dieses Skript stellt den Kern der Wurfexperimente dar und enthält Parameter für verschiedene Wurfbewegungen:
 
 ```python
-#!/usr/bin/env python3
+# Bewegung zur Greifposition
+grasp_position = [0, -0.15, -2.08, -0.15, 1.5, 1.5]
+controller.move_joints(grasp_position)
 
-import sys
-import rospy
-import moveit_commander
-from moveit_commander import PlanningSceneInterface
+# Wurfbewegung ausführen
+throw_motion_position = [-1.5, -0.6, 0, 0, 0, 0]
+controller.move_joints(throw_motion_position, wait_time=0)
 
-def main():
-    # Initialisiere MoveIt! und ROS
-    moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node('move_robot', anonymous=True)
-
-    # Roboter-Planungsgruppe und Umgebung einrichten
-    group_name = "manipulator"  # Die Planungsgruppe für den UR5e
-    move_group = moveit_commander.MoveGroupCommander(group_name)
-    scene = moveit_commander.PlanningSceneInterface()
-
-    # Hole aktuelle Position des Roboters
-    current_joint_values = move_group.get_current_joint_values()
-    rospy.loginfo("Aktuelle Gelenkwerte: %s", current_joint_values)
-
-    # Setze Zielposition auf "home" (vordefiniert in der MoveIt!-Konfiguration)
-    move_group.set_named_target("home")
-    rospy.loginfo("Bewege Roboter zur Home-Position...")
-    plan = move_group.go(wait=True)
-
-    # Gib an, dass der Roboter zur Home-Position bewegt wurde
-    if plan:
-        rospy.loginfo("Roboter erfolgreich in Home-Position bewegt!")
-    else:
-        rospy.logwarn("Fehler beim Bewegen des Roboters zur Home-Position")
-
-    # Jetzt definieren wir eine benutzerdefinierte Zielposition (Bewegung über Gelenkwerte)
-    joint_goal = move_group.get_current_joint_values()
-
-    # Setze neue Zielgelenkwerte (Beispielwerte, du kannst diese ändern)
-    joint_goal[0] = -1.57  # Schulter-Pan-Gelenk
-    joint_goal[1] = -1.57  # Schulter-Lift-Gelenk
-    joint_goal[2] = 1.57   # Ellbogen-Gelenk
-    joint_goal[3] = -1.57  # Handgelenk 1
-    joint_goal[4] = 1.57   # Handgelenk 2
-    joint_goal[5] = 0.0    # Handgelenk 3
-
-    # Bewege den Roboter zu dieser neuen Zielposition
-    move_group.set_joint_value_target(joint_goal)
-    rospy.loginfo("Bewege Roboter zu benutzerdefinierten Zielwerten...")
-    plan = move_group.go(wait=True)
-
-    # Gib an, ob der Roboter erfolgreich zu der Zielposition bewegt wurde
-    if plan:
-        rospy.loginfo("Roboter erfolgreich zur Zielposition bewegt!")
-    else:
-        rospy.logwarn("Fehler beim Bewegen des Roboters zur Zielposition")
-
-    # Beende MoveIt!
-    moveit_commander.roscpp_shutdown()
-
-if __name__ == '__main__':
-    main()
+# Greifer während der Wurfbewegung öffnen
+controller.open_gripper(wait_time=4)
 ```
 
-### 8.3 Mach das Skript ausführbar
+### ⚙️ Konfigurationsdateien
 
-Stelle sicher, dass das Skript ausführbar ist:
+- **`config/`**: Enthält YAML-Dateien für die Steuerung der Gelenkcontroller und MoveIt!-Konfigurationen, die Bewegungsparameter wie Beschleunigungsgrenzen und Geschwindigkeitslimits definieren.
+
+## 🎮 Praktische Nutzung der Simulation
+
+Um die Simulationsumgebung zu starten und Wurfexperimente durchzuführen, sind folgende Schritte erforderlich:
+
+### 1️⃣ Simulation starten
+
+In einem Terminal wird die Gazebo-Simulation mit dem UR5e-Roboter gestartet:
 
 ```bash
-chmod +x ~/ur5e_ws/src/ur5e_control/scripts/move_robot.py
+roslaunch ur5_rg2_ign ur5_rg2_gazebo.launch
 ```
 
-## 9. Baue den Workspace erneut
+Diese Launch-Datei initialisiert die virtuelle Umgebung und platziert den Roboter in einer definierten Startposition.
 
-Wechsle in das Workspace-Verzeichnis und baue den Workspace erneut:
+### 2️⃣ MoveIt! starten
+
+In einem zweiten Terminal wird die MoveIt!-Planungsumgebung gestartet:
 
 ```bash
-cd ~/ur5e_ws
-catkin_make
+roslaunch ur5_rg2_ign ur5_rg2_moveit.launch
 ```
 
-Lade anschließend die ROS-Umgebungsvariablen:
+Dadurch wird der Bewegungsplaner aktiviert, der kollisionsfreie Trajektorien für den Roboter berechnet.
+
+### 3️⃣ Wurfskript ausführen
+
+Nachdem die Simulation läuft, kann in einem dritten Terminal das Wurfskript gestartet werden:
 
 ```bash
-source devel/setup.bash
+rosrun ur5_rg2_ign pick_ball.py
 ```
 
-## 10. Führe das Python-Skript aus
+Dieses Skript führt die definierte Wurfsequenz aus, bei der der Roboter einen Ball greift und mit der programmierten Bewegung wirft.
 
-Nun solltest du das Python-Skript ausführen können, um den Roboter zu bewegen:
+### 4️⃣ Parameter anpassen
 
-```bash
-rosrun ur5e_control move_robot.py
-```
+Für wissenschaftliche Untersuchungen können verschiedene Parameter im Wurfskript angepasst werden:
 
----
-
-## Starten der Simulation und des Skriptes
-
-Hier sind die drei Hauptbefehle zusammengefasst, die du nacheinander in separaten Terminals ausführen musst:
-
-```bash
-roslaunch ur_gazebo ur5e_bringup.launch
-```
-
-```bash
-roslaunch ur5e_moveit_config moveit_planning_execution.launch sim:=true
-```
-
-```bash
-rosrun ur5e_control move_robot.py
-```
+- 📐 Gelenkwinkel und Positionen für unterschiedliche Wurfbahnen
+- ⏱️ Timing und Geschwindigkeit der Bewegungen
+- 👐 Öffnungszeitpunkt des Greifers für optimale Freigabe des Objekts
+- 📈 Beschleunigungsprofile für verschiedene Wurftechniken
