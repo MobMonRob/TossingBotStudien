@@ -1,15 +1,23 @@
 <?xml version="1.0"?>
 <package format="3">
-    <name>ur5_rg2_ign</name>
-    <version>1.0.0</version>
-    <description>Universal Robot 5 (UR5) robot with OnRobot RG2 gripper for Ignition and MoveIt2.</description>
-    <maintainer email="orsula.andrej@gmail.com">Andrej Orsula</maintainer>
-    <author>Andrej Orsula</author>
-    <license>BSD</license>
+  <name>ur5_rg2_ign</name>
+  <version>2.0.0</version>
+  <description>UR5e robot with OnRobot RG2 gripper for ROS2 Humble Gazebo</description>
+  <maintainer email="student@dhbw.de">Student</maintainer>
+  <license>BSD</license>
 
-    <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
-    <export>
-        <build_type>ament_cmake</build_type>
-    </export>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>gazebo_ros2_control</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>

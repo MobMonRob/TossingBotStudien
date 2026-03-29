@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Arguments -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  
+  <!-- Start Gazebo with the UR5 -->
+  <include file="$(find ur5_rg2_ign)/launch/ur5_rg2_gazebo.launch">
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+  
+  <!-- Wait for gazebo to be fully up before starting the controllers -->
+  <arg name="wait_for_gazebo" default="5.0" />
+  <node pkg="rospy" type="sleep.py" name="wait_for_gazebo" args="$(arg wait_for_gazebo)" />
+  
+  <!-- Start the controllers -->
+  <include file="$(find ur5_rg2_ign)/launch/ur5_rg2_control.launch">
+    <arg name="launch_prefix" value="bash -c 'sleep $(arg wait_for_gazebo); $0 $@'" />
+  </include>
+</launch> 
