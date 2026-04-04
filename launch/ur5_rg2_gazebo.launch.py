@@ -52,6 +52,7 @@ def generate_launch_description():
                 arguments=['joint_trajectory_controller'],
             ),
         ]),
+
         TimerAction(period=7.0, actions=[
             ExecuteProcess(
                 cmd=['ros2', 'topic', 'pub', '--once',
