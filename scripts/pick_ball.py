@@ -61,12 +61,16 @@ def main():
     controller.get_logger().info("Ausgangsposition")
     controller.open_gripper(arm_positions=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], wait_time=2.0)
     
-    # Greifposition
+    # Greifposition - Greifer offen anfahren
     controller.get_logger().info("Greifposition")
-    controller.move([0.0, -0.15, -2.08, -0.15, 1.5, 1.5], wait_time=2.0)
+    controller.open_gripper(arm_positions=[0.0, -0.15, -2.08, -0.15, 1.5, 1.5], wait_time=2.0)
+    
+    # Warte bis Arm vollständig in Greifposition
+    import time
+    time.sleep(5.0)
     
     # Greifer schließen
-    controller.close_gripper(arm_positions=[0.0, -0.15, -2.08, -0.15, 1.5, 1.5], wait_time=1.0)
+    controller.close_gripper(arm_positions=[0.0, -0.15, -2.08, -0.15, 1.5, 1.5], wait_time=1.5)
     
     # Wurfbewegung 1
     controller.get_logger().info("Wurfbewegung...")
