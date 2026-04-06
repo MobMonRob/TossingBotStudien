@@ -354,9 +354,9 @@
 
   <gazebo reference="rg2_leftfinger">
     <material>Gazebo/Grey</material>
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+    <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
@@ -365,9 +365,9 @@
 
   <gazebo reference="rg2_rightfinger">
     <material>Gazebo/Grey</material>
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+    <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
