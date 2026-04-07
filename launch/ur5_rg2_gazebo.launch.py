@@ -22,7 +22,7 @@ def generate_launch_description():
                 os.path.join(get_package_share_directory('gazebo_ros'),
                              'launch', 'gazebo.launch.py')
             ]),
-            launch_arguments={'world': os.path.join(pkg, 'launch', 'empty_world.world')}.items(),
+            launch_arguments={'world': os.path.join(pkg, 'launch', 'empty_world.world'), 'gui': 'false'}.items(),
         ),
         Node(
             package='robot_state_publisher',

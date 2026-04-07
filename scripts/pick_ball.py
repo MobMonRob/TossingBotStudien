@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from builtin_interfaces.msg import Duration
+from gazebo_model_attachment_plugin_msgs.srv import Attach
 import time
 
 class DirectRobotController(Node):
@@ -18,6 +19,8 @@ class DirectRobotController(Node):
             'wrist_1_joint', 'wrist_2_joint', 'wrist_3_joint',
             'rg2_finger_joint1', 'rg2_finger_joint2'
         ]
+        self.attach_client = self.create_client(Attach, '/attach')
+        self.detach_client = self.create_client(Attach, '/detach')
         time.sleep(2)
         self.get_logger().info("Controller initialisiert")
 
@@ -38,38 +41,65 @@ class DirectRobotController(Node):
 
     def close_gripper(self, arm_positions=[0.0,0.0,0.0,0.0,0.0,0.0], wait_time=1.0):
         self.get_logger().info("Schließe Greifer")
-        self.move(arm_positions, [0.2, 0.2], wait_time=wait_time)
+        self.move(arm_positions, [0.355, 0.355], wait_time=wait_time)
+
+    def attach_cube(self):
+        self.get_logger().info("Befestige Würfel am Greifer")
+        req = Attach.Request()
+        req.joint_name = 'grasp_joint'
+        req.model_name_1 = 'ur5_rg2'
+        req.link_name_1 = 'rg2_hand'
+        req.model_name_2 = 'box'
+        req.link_name_2 = 'link'
+        future = self.attach_client.call_async(req)
+        rclpy.spin_until_future_complete(self, future, timeout_sec=3.0)
+        if future.result() and future.result().success:
+            self.get_logger().info("Würfel befestigt!")
+        else:
+            self.get_logger().warn("Attach fehlgeschlagen")
+
+    def detach_cube(self):
+        self.get_logger().info("Löse Würfel vom Greifer")
+        req = Attach.Request()
+        req.joint_name = 'grasp_joint'
+        req.model_name_1 = 'ur5_rg2'
+        req.link_name_1 = 'rg2_hand'
+        req.model_name_2 = 'box'
+        req.link_name_2 = 'link'
+        future = self.detach_client.call_async(req)
+        rclpy.spin_until_future_complete(self, future, timeout_sec=3.0)
+        self.get_logger().info("Würfel gelöst!")
 
 def main():
     rclpy.init()
     controller = DirectRobotController()
 
-    # Ausgangsposition + Greifer öffnen
+    # Ausgangsposition
     controller.get_logger().info("Ausgangsposition")
     controller.open_gripper(arm_positions=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], wait_time=2.0)
 
-    # Zwischenposition mit offenem Greifer
+    # Zwischenposition
     controller.get_logger().info("Zwischenposition")
     controller.open_gripper(arm_positions=[0.0, 0.3, -2.08, -0.15, 1.5, 1.5], wait_time=3.0)
 
-    # Greifposition - Greifer offen
+    # Greifposition
     controller.get_logger().info("Greifposition")
-    controller.open_gripper(arm_positions=[0.0, 0.01, -2.08, -0.15, 1.5, -1.5], wait_time=4.0)
+    controller.open_gripper(arm_positions=[-0.015, -0.21, -1.95, -0.3, 1.5, -1.622], wait_time=3.0)
 
     # Greifer schließen
-    controller.get_logger().info("Greifer schließen")
-    controller.close_gripper(arm_positions=[0.0, 0.01, -2.08, -0.15, 1.5, -1.5], wait_time=0.3)
+    controller.close_gripper(arm_positions=[-0.015, -0.21, -1.95, -0.3, 1.5, -1.622], wait_time=1.0)
 
-    # Arm leicht anheben mit Würfel
-    controller.get_logger().info("Anheben")
-    controller.move([0.0, 0.01, -2.08, -0.15, 1.5, -1.5], gripper_positions=[0.35, 0.35], wait_time=1.0, duration_sec=1)
+    # Würfel befestigen
+    controller.attach_cube()
+    time.sleep(0.5)
 
-    # Wurfbewegung 1 - sofort!
+    # Wurfbewegung 1
     controller.get_logger().info("Wurfbewegung...")
-    controller.move([-1.5, 1.3, 0.0, 0.0, 0.0, 0.0], gripper_positions=[0.35, 0.35], wait_time=1.5, duration_sec=1)
+    controller.move([-1.5, 1.3, 0.0, 0.0, 0.0, 0.0], gripper_positions=[0.355, 0.355], wait_time=1.5, duration_sec=1)
 
-    # Wurfbewegung 2 - schnell + Greifer öffnen!
+    # Wurfbewegung 2 + Würfel loslassen
     controller.get_logger().info("Ball loslassen!")
+    controller.detach_cube()
     controller.move([-1.5, -0.6, 0.0, 0.0, 0.0, 0.0], gripper_positions=[1.0, 1.0], wait_time=4.0, duration_sec=1)
 
     # Zurück zur Ausgangsposition
