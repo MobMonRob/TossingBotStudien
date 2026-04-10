@@ -199,7 +199,7 @@
   <joint name="ur5_hand_joint" type="fixed">
     <parent link="wrist_3_link"/>
     <child link="rg2_hand"/>
-    <origin xyz="0 0.0823 0" rpy="1.570796325 0 1.570796325"/>
+   <origin xyz="0 0 0" rpy="1.570796325 0 1.570796325"/>
     <limit lower="0" upper="0" effort="0" velocity="0"/>
   </joint>
 
