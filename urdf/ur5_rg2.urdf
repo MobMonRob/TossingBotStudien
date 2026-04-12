@@ -178,7 +178,7 @@
 <joint name="gripper_bracket_joint" type="fixed">
   <parent link="wrist_3_link"/>
   <child link="gripper_bracket"/>
-<origin xyz="0 0.0823 0" rpy="1.570796325 0 0"/>
+<origin xyz="0 0.0823 0" rpy="1.570796325 0 1.570796325"/>
 </joint>
 
   <!-- RG2 Body -->
