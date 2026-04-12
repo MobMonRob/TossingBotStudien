@@ -160,76 +160,266 @@
     <dynamics damping="5.0" friction="2.0"/>
   </joint>
 
-  <joint name="ur5_hand_joint" type="fixed">
-    <parent link="wrist_3_link"/>
-    <child link="rg2_hand"/>
-    <origin xyz="0 0.0823 0" rpy="1.570796325 0 1.570796325"/>
-    <limit lower="0" upper="0" effort="0" velocity="0"/>
-  </joint>
-
-  <link name="rg2_hand">
-    <visual name="rg2_hand_visual">
-      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/hand.dae"/></geometry>
+  <!-- RG2 Greifer - Bracket -->
+  <link name="gripper_bracket">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
     </visual>
-    <collision name="rg2_hand_collision">
-      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/rg2/hand.stl"/></geometry>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
     </collision>
     <inertial>
-      <mass value="0.5"/>
+      <mass value="0.09"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
 
-  <link name="rg2_leftfinger">
+<joint name="gripper_bracket_joint" type="fixed">
+  <parent link="wrist_3_link"/>
+  <child link="gripper_bracket"/>
+<origin xyz="0 0 0.05" rpy="0 0 0"/>
+</joint>
+
+  <!-- RG2 Body -->
+  <link name="gripper_body">
     <visual>
-      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/rg2/finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl"/></geometry>
     </collision>
     <inertial>
-      <mass value="0.1"/>
+      <mass value="0.65"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
 
-  <link name="rg2_rightfinger">
+  <joint name="gripper_body_joint" type="fixed">
+    <parent link="gripper_bracket"/>
+    <child link="gripper_body"/>
+    <origin xyz="0.0 0.0 0.05" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Finger 1 - Origin -->
+  <link name="finger_1_origin">
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_1_origin_joint" type="fixed">
+    <parent link="gripper_body"/>
+    <child link="finger_1_origin"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Finger 1 - Moment Arm -->
+  <link name="finger_1_moment_arm">
     <visual>
-      <origin rpy="3.141592653589793 0 0" xyz="0 0 0"/>
-      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </visual>
     <collision>
-      <origin rpy="3.141592653589793 0 0" xyz="0 0 0"/>
-      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/rg2/finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </collision>
     <inertial>
-      <mass value="0.1"/>
+      <mass value="0.001"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
 
   <joint name="rg2_finger_joint1" type="revolute">
-  <parent link="rg2_hand"/>
-  <child link="rg2_leftfinger"/>
-  <origin rpy="0 0 0" xyz="0.105 0.017 0"/>
-  <axis xyz="0 0 1"/>
-  <limit effort="2.0" lower="0.0" upper="1.18" velocity="0.3"/>
-  <dynamics damping="50.0" friction="10.0"/>
-</joint>
+    <parent link="finger_1_origin"/>
+    <child link="finger_1_moment_arm"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="-0.017 0.0 0.055" rpy="0.0 -0.772 0.0"/>
+    <limit lower="0.0" upper="1.3" effort="10.0" velocity="50.0"/>
+    <dynamics damping="0.17"/>
+  </joint>
 
-<joint name="rg2_finger_joint2" type="revolute">
-  <parent link="rg2_hand"/>
-  <child link="rg2_rightfinger"/>
-  <origin rpy="0 0 0" xyz="0.105 -0.017 0"/>
-  <axis xyz="0 0 -1"/>
-  <limit effort="10.6" lower="0.0" upper="1.18" velocity="1.57"/>
-  <mimic joint="rg2_finger_joint1" multiplier="1.0" offset="0.0"/>
-  <dynamics damping="5.0" friction="1.0"/>
-</joint>
+  <!-- Finger 1 - Truss Arm -->
+  <link name="finger_1_truss_arm">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
 
+  <joint name="finger_1_truss_arm_joint" type="revolute">
+    <parent link="finger_1_origin"/>
+    <child link="finger_1_truss_arm"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="-0.0075 0.0 0.0715" rpy="0.0 -0.772 0.0"/>
+    <limit lower="0.0" upper="1.3" effort="10.0" velocity="50.0"/>
+    <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
+  </joint>
+
+  <!-- Finger 1 - Finger Tip -->
+  <link name="finger_1_finger_tip">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_1_finger_tip_joint" type="revolute">
+    <parent link="finger_1_truss_arm"/>
+    <child link="finger_1_finger_tip"/>
+    <axis xyz="0 -1 0"/>
+    <origin xyz="-0.0256 0.0 0.04868" rpy="0.0 0.772 0.0"/>
+    <limit lower="0.0" upper="1.3" effort="10.0" velocity="50.0"/>
+    <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
+  </joint>
+
+  <!-- Finger 1 - Flex Finger -->
+  <link name="finger_1_flex_finger">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_1_flex_finger_joint" type="fixed">
+    <parent link="finger_1_finger_tip"/>
+    <child link="finger_1_flex_finger"/>
+    <origin xyz="0.03059 0.0 0.0172" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Finger 2 - Origin -->
+  <link name="finger_2_origin">
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_2_origin_joint" type="fixed">
+    <parent link="gripper_body"/>
+    <child link="finger_2_origin"/>
+    <origin xyz="0 0 0" rpy="0 0 3.14159265"/>
+  </joint>
+
+  <!-- Finger 2 - Moment Arm -->
+  <link name="finger_2_moment_arm">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="rg2_finger_joint2" type="revolute">
+    <parent link="finger_2_origin"/>
+    <child link="finger_2_moment_arm"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="-0.017 0.0 0.055" rpy="0.0 -0.772 0.0"/>
+    <limit lower="0.0" upper="1.3" effort="10.0" velocity="50.0"/>
+    <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
+    <dynamics damping="0.17"/>
+  </joint>
+
+  <!-- Finger 2 - Truss Arm -->
+  <link name="finger_2_truss_arm">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_2_truss_arm_joint" type="revolute">
+    <parent link="finger_2_origin"/>
+    <child link="finger_2_truss_arm"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="-0.0075 0.0 0.0715" rpy="0.0 -0.772 0.0"/>
+    <limit lower="0.0" upper="1.3" effort="10.0" velocity="50.0"/>
+    <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
+  </joint>
+
+  <!-- Finger 2 - Finger Tip -->
+  <link name="finger_2_finger_tip">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_2_finger_tip_joint" type="revolute">
+    <parent link="finger_2_truss_arm"/>
+    <child link="finger_2_finger_tip"/>
+    <axis xyz="0 -1 0"/>
+    <origin xyz="-0.0256 0.0 0.04868" rpy="0.0 0.772 0.0"/>
+    <limit lower="0.0" upper="1.3" effort="10.0" velocity="50.0"/>
+    <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
+  </joint>
+
+  <!-- Finger 2 - Flex Finger -->
+  <link name="finger_2_flex_finger">
+    <visual>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+    </visual>
+    <collision>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <joint name="finger_2_flex_finger_joint" type="fixed">
+    <parent link="finger_2_finger_tip"/>
+    <child link="finger_2_flex_finger"/>
+    <origin xyz="0.03059 0.0 0.0172" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Tool0 -->
   <link name="tool0">
     <inertial>
       <mass value="0.001"/>
@@ -244,6 +434,7 @@
     <origin xyz="0 0.275 0" rpy="-1.570796325 0 0"/>
   </joint>
 
+  <!-- Gazebo Plugins -->
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
       <parameters>/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/config/controllers.yaml</parameters>
@@ -261,6 +452,50 @@
     </plugin>
   </gazebo>
 
+  <gazebo>
+    <plugin name="mimic_plugin_truss1" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_1_truss_arm_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="mimic_plugin_tip1" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_1_finger_tip_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="mimic_plugin_truss2" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_2_truss_arm_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="mimic_plugin_tip2" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_2_finger_tip_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
+
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
     <mu1>100.0</mu1>
@@ -269,7 +504,6 @@
     <kd>100.0</kd>
     <selfCollide>false</selfCollide>
     <gravity>true</gravity>
-    <maxContacts>10</maxContacts>
   </gazebo>
 
   <gazebo reference="shoulder_link"><material>Gazebo/Orange</material></gazebo>
@@ -278,86 +512,25 @@
   <gazebo reference="wrist_1_link"><material>Gazebo/Orange</material></gazebo>
   <gazebo reference="wrist_2_link"><material>Gazebo/Orange</material></gazebo>
   <gazebo reference="wrist_3_link"><material>Gazebo/Orange</material></gazebo>
-  <gazebo reference="rg2_hand"><material>Gazebo/Grey</material></gazebo>
 
-  <gazebo reference="rg2_leftfinger">
+  <gazebo reference="finger_1_flex_finger">
     <material>Gazebo/Grey</material>
     <mu1>100.0</mu1>
     <mu2>100.0</mu2>
     <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.01</maxVel>
-    <selfCollide>false</selfCollide>
-</gazebo>
+    <maxVel>0.1</maxVel>
+  </gazebo>
 
-<gazebo reference="rg2_rightfinger">
+  <gazebo reference="finger_2_flex_finger">
     <material>Gazebo/Grey</material>
     <mu1>100.0</mu1>
     <mu2>100.0</mu2>
     <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.01</maxVel>
-    <selfCollide>false</selfCollide>
-</gazebo>
-
-  <gazebo reference="rg2_finger_joint1">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-    <fudgeFactor>1.0</fudgeFactor>
-  </gazebo>
-
-  <gazebo reference="rg2_finger_joint2">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-    <fudgeFactor>1.0</fudgeFactor>
-  </gazebo>
-
-  <gazebo reference="shoulder_pan_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-  </gazebo>
-
-  <gazebo reference="shoulder_lift_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-  </gazebo>
-
-  <gazebo reference="elbow_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-  </gazebo>
-
-  <gazebo reference="wrist_1_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-  </gazebo>
-
-  <gazebo reference="wrist_2_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
-  </gazebo>
-
-  <gazebo reference="wrist_3_joint">
-    <implicitSpringDamper>1</implicitSpringDamper>
-    <provideFeedback>true</provideFeedback>
-    <stopCfm>0.001</stopCfm>
-    <stopErp>0.8</stopErp>
+    <maxVel>0.1</maxVel>
   </gazebo>
 
   <ros2_control name="GazeboSystem" type="system">
