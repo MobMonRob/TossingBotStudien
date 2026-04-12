@@ -216,8 +216,8 @@
   <child link="rg2_leftfinger"/>
   <origin rpy="0 0 0" xyz="0.105 0.017 0"/>
   <axis xyz="0 0 1"/>
-  <limit effort="10.6" lower="0.0" upper="1.18" velocity="1.57"/>
-  <dynamics damping="5.0" friction="1.0"/>
+  <limit effort="2.0" lower="0.0" upper="1.18" velocity="0.3"/>
+  <dynamics damping="50.0" friction="10.0"/>
 </joint>
 
 <joint name="rg2_finger_joint2" type="revolute">
@@ -282,25 +282,25 @@
 
   <gazebo reference="rg2_leftfinger">
     <material>Gazebo/Grey</material>
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+    <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
+    <maxVel>0.01</maxVel>
     <selfCollide>false</selfCollide>
-  </gazebo>
+</gazebo>
 
-  <gazebo reference="rg2_rightfinger">
+<gazebo reference="rg2_rightfinger">
     <material>Gazebo/Grey</material>
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+    <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
+    <maxVel>0.01</maxVel>
     <selfCollide>false</selfCollide>
-  </gazebo>
+</gazebo>
 
   <gazebo reference="rg2_finger_joint1">
     <implicitSpringDamper>1</implicitSpringDamper>
