@@ -405,8 +405,9 @@
 
 
         <!-- Arm-Hand Fixed Joint -->
-        <joint name="ur5_hand_joint" type="fixed">
-            <pose relative_to="wrist_3_link">0 0 -0.12 0 0 0</pose>
+        <joint name="<pose relative_to="wrist_3_link">0 0 -0.05 0 0 0</pose>
+ur5_hand_joint" type="fixed">
+            <pose relative_to="wrist_3_link">0 0 0 0 0 0</pose>
             <parent>wrist_3_link</parent>
             <child>rg2_hand</child>
         </joint>

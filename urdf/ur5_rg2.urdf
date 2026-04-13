@@ -10,10 +10,10 @@
 
   <link name="base_link">
     <visual name="base_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/base.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/base.dae"/></geometry>
     </visual>
     <collision name="base_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/base.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/base.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="4.210389694173812"/>
@@ -24,10 +24,10 @@
 
   <link name="shoulder_link">
     <visual name="shoulder_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/shoulder.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/shoulder.dae"/></geometry>
     </visual>
     <collision name="shoulder_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/shoulder.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/shoulder.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="2.6078628081050645"/>
@@ -38,10 +38,10 @@
 
   <link name="upper_arm_link">
     <visual name="upper_arm_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/upperarm.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/upperarm.dae"/></geometry>
     </visual>
     <collision name="upper_arm_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/upperarm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/upperarm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="9.034556202946057"/>
@@ -52,10 +52,10 @@
 
   <link name="forearm_link">
     <visual name="forearm_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/forearm.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/forearm.dae"/></geometry>
     </visual>
     <collision name="forearm_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/forearm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/forearm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="2.275"/>
@@ -66,10 +66,10 @@
 
   <link name="wrist_1_link">
     <visual name="wrist_1_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist1.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist1.dae"/></geometry>
     </visual>
     <collision name="wrist_1_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist1.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist1.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.8652783044597422"/>
@@ -80,10 +80,10 @@
 
   <link name="wrist_2_link">
     <visual name="wrist_2_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist2.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist2.dae"/></geometry>
     </visual>
     <collision name="wrist_2_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist2.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist2.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="1.219"/>
@@ -94,10 +94,10 @@
 
   <link name="wrist_3_link">
     <visual name="wrist_3_link_visual">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist3.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist3.dae"/></geometry>
     </visual>
     <collision name="wrist_3_link_collision">
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist3.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist3.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.1879"/>
@@ -163,10 +163,10 @@
   <!-- RG2 Greifer - Bracket -->
   <link name="gripper_bracket">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.09"/>
@@ -176,18 +176,19 @@
   </link>
 
 <joint name="gripper_bracket_joint" type="fixed">
-  <parent link="wrist_3_link"/>
+  <parent link="tool0"/>
   <child link="gripper_bracket"/>
-<origin xyz="0 0.0823 0" rpy="-1.570796325 0 0"/>
+  <origin xyz="0 0 0.001" rpy="0 0 0"/>
 </joint>
+
 
   <!-- RG2 Body -->
   <link name="gripper_body">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.65"/>
@@ -220,10 +221,10 @@
   <!-- Finger 1 - Moment Arm -->
   <link name="finger_1_moment_arm">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -244,10 +245,10 @@
   <!-- Finger 1 - Truss Arm -->
   <link name="finger_1_truss_arm">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -268,10 +269,10 @@
   <!-- Finger 1 - Finger Tip -->
   <link name="finger_1_finger_tip">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -292,10 +293,10 @@
   <!-- Finger 1 - Flex Finger -->
   <link name="finger_1_flex_finger">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -328,10 +329,10 @@
   <!-- Finger 2 - Moment Arm -->
   <link name="finger_2_moment_arm">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -353,10 +354,10 @@
   <!-- Finger 2 - Truss Arm -->
   <link name="finger_2_truss_arm">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -377,10 +378,10 @@
   <!-- Finger 2 - Finger Tip -->
   <link name="finger_2_finger_tip">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -401,10 +402,10 @@
   <!-- Finger 2 - Flex Finger -->
   <link name="finger_2_flex_finger">
     <visual>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -431,13 +432,13 @@
   <joint name="end_effector_frame_fixed_joint" type="fixed">
     <parent link="wrist_3_link"/>
     <child link="tool0"/>
-    <origin xyz="0 0.275 0" rpy="-1.570796325 0 0"/>
+    <origin xyz="0 0 -0.12" rpy="0 0 0"/>
   </joint>
 
   <!-- Gazebo Plugins -->
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/config/controllers.yaml</parameters>
+      <parameters>/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/config/controllers.yaml</parameters>
     </plugin>
   </gazebo>
 
@@ -498,8 +499,8 @@
 
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
-    <mu1>1000.0</mu1>
-    <mu2>1000.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
     <kp>1000000.0</kp>
     <kd>100.0</kd>
     <selfCollide>false</selfCollide>
@@ -515,8 +516,8 @@
 
   <gazebo reference="finger_1_flex_finger">
     <material>Gazebo/Grey</material>
-    <mu1>1000.0</mu1>
-    <mu2>1000.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
     <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
@@ -525,8 +526,8 @@
 
   <gazebo reference="finger_2_flex_finger">
     <material>Gazebo/Grey</material>
-    <mu1>1000.0</mu1>
-    <mu2>1000.0</mu2>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
     <kp>10000000.0</kp>
     <kd>1.0</kd>
     <minDepth>0.001</minDepth>
