@@ -437,7 +437,7 @@
   <!-- Gazebo Plugins -->
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/config/controllers.yaml</parameters>
+      <parameters>/home/s/ros2_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/config/controllers.yaml</parameters>
     </plugin>
   </gazebo>
 
