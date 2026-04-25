@@ -76,7 +76,7 @@
       </material>
     </visual>
     <inertial>
-      <mass>0.05</mass>
+      <mass>0.01</mass>
       <inertia>
         <ixx>0.00001</ixx>
         <ixy>0</ixy>
