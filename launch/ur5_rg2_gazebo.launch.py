@@ -58,7 +58,7 @@ def generate_launch_description():
                 cmd=['ros2', 'topic', 'pub', '--once',
                      '/joint_trajectory_controller/joint_trajectory',
                      'trajectory_msgs/msg/JointTrajectory',
-                     '{header: {frame_id: ""}, joint_names: ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"], points: [{positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], time_from_start: {sec: 2}}]}'],
+                     '{header: {frame_id: ""}, joint_names: ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint", "rg2_finger_joint1"], points: [{positions: [-0.03, -0.25, -1.93, -0.3, 1.5, -0.04, 0.0], time_from_start: {sec: 2}}]}'],
                 output='screen'
             ),
         ]),
