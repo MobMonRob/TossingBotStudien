@@ -29,5 +29,5 @@ joint_trajectory_controller:
       wrist_1_joint:       {p: 100.0, i: 0.01, d: 5.0}
       wrist_2_joint:       {p: 100.0, i: 0.01, d: 5.0}
       wrist_3_joint:       {p: 100.0, i: 0.01, d: 5.0}
-      rg2_finger_joint1:   {p: 50.0,  i: 0.01, d: 1.0}
+      rg2_finger_joint1:   {p: 500.0,  i: 0.1, d: 5.0}
 

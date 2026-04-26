@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from builtin_interfaces.msg import Duration
-from gazebo_model_attachment_plugin_msgs.srv import Attach
+from boeing_gazebo_model_attachment_plugin_msgs.srv import Attach
 import time
 
 class DirectRobotController(Node):

@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
   <world name="default">
+    <plugin name="boeing_gazebo_model_attachment_plugin" filename="libboeing_gazebo_model_attachment_plugin_lib.so"/>
     <!-- A global light source -->
     <include>
       <uri>model://sun</uri>
