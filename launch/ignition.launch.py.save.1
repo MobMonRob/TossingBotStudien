@@ -1,0 +1,118 @@
+world_path = "/home/s/tossingbot_ws/src/TossingBotStudien/TossingBot2.0/Simulation/ur5_rg2_ign/launch/empty_world.world"
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+from launch_ros.actions import Node
+import os
+
+def generate_launch_description():
+
+    world_path = "/home/s/tossingbot_ws/src/TossingBotStudien/TossingBot2.0/Simulation/ur5_rg2_ign/launch/empty_world.sdf"
+
+    return LaunchDescription([
+
+        # Ignition Gazebo starten
+        ExecuteProcess(
+            cmd=["ign", "gazebo", world_path],
+            output="screen"
+        ),
+
+        # Roboterbeschreibung laden
+        Node(
+            package="robot_state_publisher",
+            executable="robot_state_publisher",
+            parameters=[{
+                "robot_description": open(
+                    "/home/s/tossingbot_ws/src/TossingBotStudien/TossingBot2.0/Simulation/ur5_rg2_ign/urdf/ur5_rg2.urdf"
+                ).read()
+            }],
+        ),
+
+        # Roboter in Ignition spawnen
+        Node(
+            package="ros_gz_sim",
+            executable="create",
+            arguments=[
+                "-name", "ur5_rg2",
+                "-topic", "robot_description",
+                "-x", "0.5", "-y", "0", "-z", "0.5"
+            ],
+            output="screen"
+        ),
+
+        # Controller starten
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            arguments=["joint_state_broadcaster"],
+        ),
+
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            arguments=["joint_trajectory_controller"],
+        ),
+    ])
+from launch import LaunchDescription
+from launch.actions import ExecuteProcess
+from launch_ros.actions import Node
+import os
+
+def generate_launch_description():
+
+    world_path = "/home/s/tossingbot_ws/src/TossingBotStudien/TossingBot2.0/Simulation/ur5_rg2_ign/launch/empty_world.sdf"
+    urdf_path = "/home/s/tossingbot_ws/src/TossingBotStudien/TossingBot2.0/Simulation/ur5_rg2_ign/urdf/ur5_rg2.urdf"
+    controllers_yaml = "/home/s/tossingbot_ws/src/ur5_rg2_ign/config/controllers.yaml"
+
+    with open(urdf_path, "r") as f:
+        robot_description = f.read()
+
+    robot_description = robot_description.replace("__CONTROLLERS_YAML__", controllers_yaml)
+
+    return LaunchDescription([
+
+        # Ignition Gazebo starten
+        ExecuteProcess(
+            cmd=["ign", "gazebo", world_path],
+            output="screen"
+        ),
+
+        # ROS → Ignition Bridge für robot_description
+        Node(
+            package="ros_gz_bridge",
+            executable="parameter_bridge",
+            arguments=["/robot_description@std_msgs/msg/String@gz.msgs.Param"],
+            output="screen"
+        ),
+
+        # Roboterbeschreibung laden
+                Node(
+            package="robot_state_publisher",
+            executable="robot_state_publisher",
+            parameters=[{"robot_description": robot_description}],
+        ),
+
+       # Roboter in Ignition spawnen
+        Node(
+            package="ros_gz_sim",
+            executable="create",
+            arguments=[
+                "-name", "ur5_rg2",
+                "-topic", "/robot_description",
+                "-x", "0.5", "-y", "0", "-z", "0.5"
+            ],
+            output="screen"
+        ),
+
+        # Controller starten
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            arguments=["joint_state_broadcaster"],
+        ),
+
+        Node(
+            package="controller_manager",
+            executable="spawner",
+            arguments=["joint_trajectory_controller"],
+        ),
+    ])

@@ -1,0 +1,955 @@
+<sdf version='1.7'>
+  <model name='ur5_rg2'>
+    <joint name='world_joint' type='fixed'>
+      <pose relative_to='__model__'>0 0 0 0 -0 0</pose>
+      <parent>world</parent>
+      <child>base_link</child>
+    </joint>
+    <link name='base_link'>
+      <pose relative_to='world_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-1e-06 0.004422 0.184343 0 -0 0</pose>
+        <mass>4.21039</mass>
+        <inertia>
+          <ixx>0.0930967</ixx>
+          <ixy>5.71127e-09</ixy>
+          <ixz>2.00398e-07</ixz>
+          <iyy>0.0925704</iyy>
+          <iyz>0.00470535</iyz>
+          <izz>0.00431065</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/base.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+06</kp>
+              <kd>100</kd>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='base_link_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/base.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <self_collide>0</self_collide>
+      <gravity>1</gravity>
+    </link>
+    <joint name='shoulder_pan_joint' type='revolute'>
+      <pose relative_to='base_link'>0 0 0.089159 0 -0 0</pose>
+      <parent>base_link</parent>
+      <child>shoulder_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.28319</lower>
+          <upper>6.28319</upper>
+          <effort>150</effort>
+          <velocity>3.15</velocity>
+        </limit>
+        <dynamics>
+          <damping>10</damping>
+          <friction>5</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='shoulder_link'>
+      <pose relative_to='shoulder_pan_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>-4e-06 0.009273 -0.001856 0 -0 0</pose>
+        <mass>2.60786</mass>
+        <inertia>
+          <ixx>0.00615891</ixx>
+          <ixy>8.48668e-07</ixy>
+          <ixz>1.43603e-07</ixz>
+          <iyy>0.00556293</iyy>
+          <iyz>-0.0001881</iyz>
+          <izz>0.00525508</izz>
+        </inertia>
+      </inertial>
+      <collision name='shoulder_link_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/shoulder.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='shoulder_link_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/shoulder.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='shoulder_lift_joint' type='revolute'>
+      <pose relative_to='shoulder_link'>0 0.13585 0 0 -0 0</pose>
+      <parent>shoulder_link</parent>
+      <child>upper_arm_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-6.28319</lower>
+          <upper>6.28319</upper>
+          <effort>150</effort>
+          <velocity>3.15</velocity>
+        </limit>
+        <dynamics>
+          <damping>10</damping>
+          <friction>5</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='upper_arm_link'>
+      <pose relative_to='shoulder_lift_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 -0.001072 0.2125 0 -0 0</pose>
+        <mass>9.03456</mass>
+        <inertia>
+          <ixx>0.256654</ixx>
+          <ixy>-2.21735e-09</ixy>
+          <ixz>2.33977e-06</ixz>
+          <iyy>0.254839</iyy>
+          <iyz>5.7019e-09</iyz>
+          <izz>0.0160223</izz>
+        </inertia>
+      </inertial>
+      <collision name='upper_arm_link_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/upperarm.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='upper_arm_link_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/upperarm.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='elbow_joint' type='revolute'>
+      <pose relative_to='upper_arm_link'>0 0 0.425 0 -0 0</pose>
+      <parent>upper_arm_link</parent>
+      <child>forearm_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-6.28319</lower>
+          <upper>6.28319</upper>
+          <effort>150</effort>
+          <velocity>3.15</velocity>
+        </limit>
+        <dynamics>
+          <damping>10</damping>
+          <friction>5</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='forearm_link'>
+      <pose relative_to='elbow_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0.25 0 -0 0</pose>
+        <mass>2.275</mass>
+        <inertia>
+          <ixx>0.0494433</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0494433</iyy>
+          <iyz>0</iyz>
+          <izz>0.004095</izz>
+        </inertia>
+      </inertial>
+      <collision name='forearm_link_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/forearm.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='forearm_link_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/forearm.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='wrist_1_joint' type='revolute'>
+      <pose relative_to='forearm_link'>0 0 0.39225 0 -0 0</pose>
+      <parent>forearm_link</parent>
+      <child>wrist_1_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-6.28319</lower>
+          <upper>6.28319</upper>
+          <effort>28</effort>
+          <velocity>3.2</velocity>
+        </limit>
+        <dynamics>
+          <damping>5</damping>
+          <friction>2</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wrist_1_link'>
+      <pose relative_to='wrist_1_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>2e-06 0.088624 -0.003577 0 -0 0</pose>
+        <mass>0.865278</mass>
+        <inertia>
+          <ixx>0.00110067</ixx>
+          <ixy>-4.06206e-08</ixy>
+          <ixz>-2.44113e-08</ixz>
+          <iyy>0.00102466</iyy>
+          <iyz>1.00092e-05</iyz>
+          <izz>0.000712521</izz>
+        </inertia>
+      </inertial>
+      <collision name='wrist_1_link_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist1.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='wrist_1_link_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist1.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='wrist_2_joint' type='revolute'>
+      <pose relative_to='wrist_1_link'>0 0.093 0 0 -0 0</pose>
+      <parent>wrist_1_link</parent>
+      <child>wrist_2_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.28319</lower>
+          <upper>6.28319</upper>
+          <effort>28</effort>
+          <velocity>3.2</velocity>
+        </limit>
+        <dynamics>
+          <damping>5</damping>
+          <friction>2</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wrist_2_link'>
+      <pose relative_to='wrist_2_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>1.219</mass>
+        <inertia>
+          <ixx>0.0025599</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0025599</iyy>
+          <iyz>0</iyz>
+          <izz>0.0021942</izz>
+        </inertia>
+      </inertial>
+      <collision name='wrist_2_link_collision_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist2.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='wrist_2_link_visual_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/r5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist2.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='wrist_3_joint' type='revolute'>
+      <pose relative_to='wrist_2_link'>0 0 0.09465 0 -0 0</pose>
+      <parent>wrist_2_link</parent>
+      <child>wrist_3_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-6.28319</lower>
+          <upper>6.28319</upper>
+          <effort>28</effort>
+          <velocity>3.2</velocity>
+        </limit>
+        <dynamics>
+          <damping>5</damping>
+          <friction>2</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='wrist_3_link'>
+      <pose relative_to='wrist_3_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0.230613 0 0 -0 0</pose>
+        <mass>1.1309</mass>
+        <inertia>
+          <ixx>0.0473962</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00322</iyy>
+          <iyz>0</iyz>
+          <izz>0.0473962</izz>
+        </inertia>
+      </inertial>
+      <collision name='wrist_3_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist3.dae</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='wrist_3_link_fixed_joint_lump__gripper_body_collision_1'>
+        <pose>0 0.4 0 0 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='wrist_3_link_fixed_joint_lump__gripper_bracket_collision_2'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='wrist_3_link_fixed_joint_lump__rg2_hand_collision_3'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/collision/rg2/hand.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='wrist_3_link_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist3.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Orange</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+      <visual name='wrist_3_link_fixed_joint_lump__gripper_body_visual_1'>
+        <pose>0 0.4 0 0 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='wrist_3_link_fixed_joint_lump__gripper_bracket_visual_2'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='wrist_3_link_fixed_joint_lump__rg2_hand_visual_3'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/hand.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='finger_1_truss_arm_joint' type='revolute'>
+      <pose relative_to='wrist_3_link'>0.0715 0.4 0.0075 0 0.7988 0</pose>
+      <parent>wrist_3_link</parent>
+      <child>finger_1_truss_arm</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.3</upper>
+          <effort>10</effort>
+          <velocity>50</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='finger_1_truss_arm'>
+      <pose relative_to='finger_1_truss_arm_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='finger_1_truss_arm_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='finger_1_truss_arm_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='finger_1_finger_tip_joint' type='revolute'>
+      <pose relative_to='finger_1_truss_arm'>-0.0256 0 0.04868 0 0.772 0</pose>
+      <parent>finger_1_truss_arm</parent>
+      <child>finger_1_finger_tip</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.3</upper>
+          <effort>10</effort>
+          <velocity>50</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='finger_1_finger_tip'>
+      <pose relative_to='finger_1_finger_tip_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.015295 0 0.0086 0 -0 0</pose>
+        <mass>0.002</mass>
+        <inertia>
+          <ixx>0.00200015</ixx>
+          <ixy>0</ixy>
+          <ixz>-2.63074e-07</ixz>
+          <iyy>0.00200062</iyy>
+          <iyz>0</iyz>
+          <izz>0.00200047</izz>
+        </inertia>
+      </inertial>
+      <collision name='finger_1_finger_tip_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='finger_1_finger_tip_fixed_joint_lump__finger_1_flex_finger_collision_1'>
+        <pose>0.03059 0 0.0172 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/
+ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='finger_1_finger_tip_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='finger_1_finger_tip_fixed_joint_lump__finger_1_flex_finger_visual_1'>
+        <pose>0.03059 0 0.0172 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='rg2_finger_joint1' type='revolute'>
+      <pose relative_to='wrist_3_link'>0.055 0.4 0.017 0 0.7988 0</pose>
+      <parent>wrist_3_link</parent>
+      <child>finger_1_moment_arm</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.3</upper>
+          <effort>10</effort>
+          <velocity>50</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.17</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='finger_1_moment_arm'>
+      <pose relative_to='rg2_finger_joint1'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='finger_1_moment_arm_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='finger_1_moment_arm_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='finger_2_truss_arm_joint' type='revolute'>
+      <pose relative_to='wrist_3_link'>0.0715 0.4 -0.0075 3.14159 -0.798793 0</pose>
+      <parent>wrist_3_link</parent>
+      <child>finger_2_truss_arm</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.3</upper>
+          <effort>10</effort>
+          <velocity>50</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='finger_2_truss_arm'>
+      <pose relative_to='finger_2_truss_arm_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='finger_2_truss_arm_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='finger_2_truss_arm_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='finger_2_finger_tip_joint' type='revolute'>
+      <pose relative_to='finger_2_truss_arm'>-0.0256 0 0.04868 0 0.772 0</pose>
+      <parent>finger_2_truss_arm</parent>
+      <child>finger_2_finger_tip</child>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.3</upper>
+          <effort>10</effort>
+          <velocity>50</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='finger_2_finger_tip'>
+      <pose relative_to='finger_2_finger_tip_joint'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0.015295 0 0.0086 0 -0 0</pose>
+        <mass>0.002</mass>
+        <inertia>
+          <ixx>0.00200015</ixx>
+          <ixy>0</ixy>
+          <ixz>-2.63074e-07</ixz>
+          <iyy>0.00200062</iyy>
+          <iyz>0</iyz>
+          <izz>0.00200047</izz>
+        </inertia>
+      </inertial>
+      <collision name='finger_2_finger_tip_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='finger_2_finger_tip_fixed_joint_lump__finger_2_flex_finger_collision_1'>
+        <pose>0.03059 0 0.0172 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <kp>1e+07</kp>
+              <kd>1</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='finger_2_finger_tip_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='finger_2_finger_tip_fixed_joint_lump__finger_2_flex_finger_visual_1'>
+        <pose>0.03059 0 0.0172 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <joint name='rg2_finger_joint2' type='revolute'>
+      <pose relative_to='wrist_3_link'>0.055 0.4 -0.017 3.14159 -0.798793 0</pose>
+      <parent>wrist_3_link</parent>
+      <child>finger_2_moment_arm</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.3</upper>
+          <effort>10</effort>
+          <velocity>50</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.17</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='finger_2_moment_arm'>
+      <pose relative_to='rg2_finger_joint2'>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='finger_2_moment_arm_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='finger_2_moment_arm_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
+      <parameters>file:///home/s/tossingbot_ws/src/ur5_rg2_ign/config/controllers.yaml</parameters>
+    </plugin>
+    <plugin name='mimic_plugin' filename='libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so'>
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>rg2_finger_joint2</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+    <plugin name='mimic_plugin_truss1' filename='libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so'>
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_1_truss_arm_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+    <plugin name='mimic_plugin_tip1' filename='libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so'>
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_1_finger_tip_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+    <plugin name='mimic_plugin_truss2' filename='libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so'>
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_2_truss_arm_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+    <static>0</static>
+    <plugin name='mimic_plugin_tip2' filename='libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so'>
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_2_finger_tip_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </model>
+</sdf>

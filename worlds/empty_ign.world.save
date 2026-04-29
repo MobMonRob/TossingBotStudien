@@ -1,0 +1,23 @@
+<sdf version="1.7">
+  <world name="default">
+
+    <!-- Boden -->
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/Ground%20Plane</uri>
+    </include>
+<include>
+  <uri>model://ur5e_rg2</uri>
+  <pose>0 0 0 0 0 0</pose>
+</include>
+
+    <!-- ROS-Gazebo Plugin -->
+    <plugin
+      filename="libros_gz_sim.so"
+      name="ros_gz_sim::GazeboSystem">
+    </plugin>
+
+    <gravity>0 0 -9.81</gravity>
+
+  </world>
+</sdf>
+

@@ -1,65 +1,23 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, TimerAction
+from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
+from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
-from launch.actions import ExecuteProcess
+from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
-    pkg = get_package_share_directory('ur5_rg2_ign')
-    urdf_file = os.path.join(pkg, 'urdf', 'ur5_rg2.urdf')
-    controllers_yaml = os.path.join(pkg, 'config', 'controllers.yaml')
-
-    with open(urdf_file, 'r') as f:
+    pkg = get_package_share_directory("ur5_rg2_ign")
+    with open(os.path.join(pkg, "urdf", "ur5_rg2.urdf"), "r") as f:
         robot_description = f.read()
-
-    robot_description = robot_description.replace('__CONTROLLERS_YAML__', controllers_yaml)
-
+    rsp = Node(package="robot_state_publisher", executable="robot_state_publisher", output="screen", parameters=[{"robot_description": robot_description}])
+    gazebo = IncludeLaunchDescription(PythonLaunchDescriptionSource([FindPackageShare("gazebo_ros"), "/launch", "/gazebo.launch.py"]))
+    spawn = Node(package="gazebo_ros", executable="spawn_entity.py", arguments=["-topic", "robot_description", "-entity", "ur5_rg2"], output="screen")
+    load_jsb = ExecuteProcess(cmd=["ros2", "control", "load_controller", "--set-state", "active", "joint_state_broadcaster"], output="screen")
+    load_jtc = ExecuteProcess(cmd=["ros2", "control", "load_controller", "--set-state", "active", "joint_trajectory_controller"], output="screen")
     return LaunchDescription([
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([
-                os.path.join(get_package_share_directory('gazebo_ros'),
-                             'launch', 'gazebo.launch.py')
-            ]),
-            launch_arguments={'world': os.path.join(pkg, 'launch', 'empty_world.world'), 'gui': 'true'}.items(),
-        ),
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            parameters=[{'robot_description': robot_description}],
-        ),
-        Node(
-            package='gazebo_ros',
-            executable='spawn_entity.py',
-            arguments=[
-                '-entity', 'ur5_rg2',
-                '-topic', 'robot_description',
-                '-x', '0.5', '-y', '0', '-z', '0.5',
-            ],
-        ),
-        TimerAction(period=3.0, actions=[
-            Node(
-                package='controller_manager',
-                executable='spawner',
-                arguments=['joint_state_broadcaster'],
-            ),
-        ]),
-        TimerAction(period=4.0, actions=[
-            Node(
-                package='controller_manager',
-                executable='spawner',
-                arguments=['joint_trajectory_controller'],
-            ),
-        ]),
-
-        TimerAction(period=7.0, actions=[
-            ExecuteProcess(
-                cmd=['ros2', 'topic', 'pub', '--once',
-                     '/joint_trajectory_controller/joint_trajectory',
-                     'trajectory_msgs/msg/JointTrajectory',
-                     '{header: {frame_id: ""}, joint_names: ["shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint", "rg2_finger_joint1"], points: [{positions: [-0.03, -0.25, -1.93, -0.3, 1.5, -0.04, 0.0], time_from_start: {sec: 2}}]}'],
-                output='screen'
-            ),
-        ]),
+        RegisterEventHandler(event_handler=OnProcessExit(target_action=spawn, on_exit=[load_jsb])),
+        RegisterEventHandler(event_handler=OnProcessExit(target_action=load_jsb, on_exit=[load_jtc])),
+        gazebo, rsp, spawn,
     ])

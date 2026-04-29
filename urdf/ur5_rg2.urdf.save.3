@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <robot name="ur5_rg2">
 
-  
   <link name="world"/>
   <joint name="world_joint" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
+
   <link name="base_link">
-<visual name="base_link_visual">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/base.dae"/></geometry>
+    <visual name="base_link_visual">
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/base.dae"/></geometry>
     </visual>
     <collision name="base_link_collision">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/base.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/base.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="4.210389694173812"/>
@@ -24,10 +24,10 @@
 
   <link name="shoulder_link">
     <visual name="shoulder_link_visual">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/shoulder.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/shoulder.dae"/></geometry>
     </visual>
     <collision name="shoulder_link_collision">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/shoulder.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/shoulder.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="2.6078628081050645"/>
@@ -38,10 +38,10 @@
 
   <link name="upper_arm_link">
     <visual name="upper_arm_link_visual">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/upperarm.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/upperarm.dae"/></geometry>
     </visual>
     <collision name="upper_arm_link_collision">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/upperarm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/upperarm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="9.034556202946057"/>
@@ -52,10 +52,10 @@
 
   <link name="forearm_link">
     <visual name="forearm_link_visual">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/forearm.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/forearm.dae"/></geometry>
     </visual>
     <collision name="forearm_link_collision">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/forearm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/forearm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="2.275"/>
@@ -66,10 +66,10 @@
 
   <link name="wrist_1_link">
     <visual name="wrist_1_link_visual">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist1.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist1.dae"/></geometry>
     </visual>
     <collision name="wrist_1_link_collision">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist1.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist1.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.8652783044597422"/>
@@ -80,10 +80,10 @@
 
   <link name="wrist_2_link">
     <visual name="wrist_2_link_visual">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist2.dae"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist2.dae"/></geometry>
     </visual>
     <collision name="wrist_2_link_collision">
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist2.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist2.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="1.219"/>
@@ -92,27 +92,19 @@
     </inertial>
   </link>
 
-<link name="wrist_3_link">
-  <visual>
-    <geometry>
-      <mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist3.dae"/>
-    </geometry>
-  </visual>
-
-  <collision>
-    <geometry>
-      <mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist3.stl"/>
-    </geometry>
-  </collision>
-
- <inertial>
-  <mass value="0.1879"/>
-  <origin xyz="0 0 0" rpy="0 0 0"/>
-  <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
-</inertial>
-</link>
-
-
+  <link name="wrist_3_link">
+    <visual name="wrist_3_link_visual">
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/ur5/wrist3.dae"/></geometry>
+    </visual>
+    <collision name="wrist_3_link_collision">
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/collision/ur5/wrist3.stl"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1879"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link
   <joint name="shoulder_pan_joint" type="revolute">
     <parent link="base_link"/>
     <child link="shoulder_link"/>
@@ -167,12 +159,13 @@
     <dynamics damping="5.0" friction="2.0"/>
   </joint>
 
+  <!-- RG2 Greifer - Bracket -->
   <link name="gripper_bracket">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/single_bracket.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.09"/>
@@ -188,16 +181,17 @@
 </joint>
 
 
+  <!-- RG2 Body -->
   <link name="gripper_body">
 <visual>
 <geometry>
-<mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl" scale="1 1 1"/>
+<mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl" scale="1 1 1"/>
 </geometry>
 </visual>
 
 <collision>
 <geometry>
-<mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl" scale="1 1 1"/>
+<mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/body.stl" scale="1 1 1"/>
 </geometry>
 </collision>
 
@@ -213,6 +207,7 @@
 <origin xyz="0 0.4 0" rpy="0 1.5708 0"/>
 </joint>
 
+  <!-- Finger 1 - Origin -->
   <link name="finger_1_origin">
     <inertial>
       <mass value="0.001"/>
@@ -227,12 +222,13 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
+  <!-- Finger 1 - Moment Arm -->
   <link name="finger_1_moment_arm">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -250,12 +246,13 @@
     <dynamics damping="0.17"/>
   </joint>
 
+  <!-- Finger 1 - Truss Arm -->
   <link name="finger_1_truss_arm">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -273,12 +270,13 @@
     <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
   </joint>
 
+  <!-- Finger 1 - Finger Tip -->
   <link name="finger_1_finger_tip">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -296,12 +294,13 @@
     <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
   </joint>
 
+  <!-- Finger 1 - Flex Finger -->
   <link name="finger_1_flex_finger">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -316,6 +315,7 @@
     <origin xyz="0.03059 0.0 0.0172" rpy="0 0 0"/>
   </joint>
 
+  <!-- Finger 2 - Origin -->
   <link name="finger_2_origin">
     <inertial>
       <mass value="0.001"/>
@@ -330,12 +330,13 @@
     <origin xyz="0 0 0" rpy="0 0 3.14159265"/>
   </joint>
 
+  <!-- Finger 2 - Moment Arm -->
   <link name="finger_2_moment_arm">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/moment_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -354,12 +355,13 @@
     <dynamics damping="0.17"/>
   </joint>
 
+  <!-- Finger 2 - Truss Arm -->
   <link name="finger_2_truss_arm">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/truss_arm.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -377,12 +379,13 @@
     <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
   </joint>
 
+  <!-- Finger 2 - Finger Tip -->
   <link name="finger_2_finger_tip">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/finger_tip.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -400,12 +403,13 @@
     <mimic joint="rg2_finger_joint1" multiplier="1" offset="0"/>
   </joint>
 
+  <!-- Finger 2 - Flex Finger -->
   <link name="finger_2_flex_finger">
     <visual>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </visual>
     <collision>
-      <geometry><mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
+      <geometry><mesh filename="package://ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/flex_finger.stl"/></geometry>
     </collision>
     <inertial>
       <mass value="0.001"/>
@@ -420,10 +424,11 @@
     <origin xyz="0.03059 0.0 0.0172" rpy="0 0 0"/>
   </joint>
 
+  <!-- Tool0 -->
   <link name="tool0">
     <inertial>
       <mass value="0.001"/>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0.10" xyz="0 0 0"/>
       <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
     </inertial>
   </link>
@@ -431,45 +436,70 @@
   <joint name="end_effector_frame_fixed_joint" type="fixed">
     <parent link="wrist_3_link"/>
     <child link="tool0"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 -0.02" rpy="0 0 1.5708"/>
   </joint>
-<link name="rg2_hand">
-  <visual>
-    <geometry>
-      <mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/visual/rg2/hand.dae"/>
-    </geometry>
-  </visual>
-  <collision>
-    <geometry>
-      <mesh filename="/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/ur5_rg2/meshes/collision/rg2/hand.stl"/>
-    </geometry>
-  </collision>
-  <inertial>
-    <mass value="0.2"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
-  </inertial>
-</link>
-
-  <joint name="tool0_to_rg2" type="fixed">
-    <parent link="tool0"/>
-    <child link="rg2_hand"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-  </joint>
-
 
   <!-- Gazebo Plugins -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>/home/s/tossingbot_ws/install/ur5_rg2_ign/share/ur5_rg2_ign/config/controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
 
+  <gazebo>
+    <plugin name="mimic_plugin" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>rg2_finger_joint2</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
 
-  
+  <gazebo>
+    <plugin name="mimic_plugin_truss1" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_1_truss_arm_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
 
-  
+  <gazebo>
+    <plugin name="mimic_plugin_tip1" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_1_finger_tip_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
 
-  
+  <gazebo>
+    <plugin name="mimic_plugin_truss2" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_2_truss_arm_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
 
-  
-
-  
+  <gazebo>
+    <plugin name="mimic_plugin_tip2" filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so">
+      <joint>rg2_finger_joint1</joint>
+      <mimicJoint>finger_2_finger_tip_joint</mimicJoint>
+      <multiplier>1.0</multiplier>
+      <offset>0.0</offset>
+      <maxEffort>100.0</maxEffort>
+      <sensitiveness>0.0</sensitiveness>
+    </plugin>
+  </gazebo>
 
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
@@ -514,45 +544,46 @@
     </hardware>
     <joint name="shoulder_pan_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
-      <state_interface name="effort"/>
     </joint>
     <joint name="shoulder_lift_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
-      <state_interface name="effort"/>
     </joint>
     <joint name="elbow_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
-      <state_interface name="effort"/>
     </joint>
     <joint name="wrist_1_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
-      <state_interface name="effort"/>
     </joint>
     <joint name="wrist_2_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
-      <state_interface name="effort"/>
     </joint>
     <joint name="wrist_3_joint">
       <command_interface name="position"/>
-      <state_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
       <state_interface name="velocity"/>
-      <state_interface name="effort"/>
+    </joint>
+    <joint name="rg2_finger_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+    <joint name="rg2_finger_joint2">
+      <param name="mimic">rg2_finger_joint1</param>
+      <param name="multiplier">1</param>
+      <command_interface name="position"/>
+      <state_interface name="position"><param name="initial_value">0.0</param></state_interface>
+      <state_interface name="velocity"/>
     </joint>
   </ros2_control>
 
-<gazebo>
-  <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-    <parameters>/home/s/tossingbot_ws/src/ur5_rg2_ign/config/controllers.yaml</parameters>
-  </plugin>
-</gazebo>
 </robot>

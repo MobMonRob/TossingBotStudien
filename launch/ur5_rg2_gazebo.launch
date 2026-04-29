@@ -7,7 +7,7 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
   <arg name="model" default="$(find ur5_rg2_ign)/urdf/ur5_rg2.urdf"/>
-  <arg name="world" default="$(find ur5_rg2_ign)/launch/empty_world.world"/>
+<arg name="world" default="/home/s/tossingbot_ws/src/TossingBotStudien/TossingBot2.0/Simulation/ur5_rg2_ign/launch/empty_world.world"/>
 
   <!-- Gazebo settings -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
