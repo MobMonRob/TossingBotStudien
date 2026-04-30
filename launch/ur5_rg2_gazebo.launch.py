@@ -12,8 +12,8 @@ def generate_launch_description():
     with open(os.path.join(pkg, "urdf", "ur5_rg2.urdf"), "r") as f:
         robot_description = f.read()
     rsp = Node(package="robot_state_publisher", executable="robot_state_publisher", output="screen", parameters=[{"robot_description": robot_description}])
-    gazebo = IncludeLaunchDescription(PythonLaunchDescriptionSource([FindPackageShare("gazebo_ros"), "/launch", "/gazebo.launch.py"]))
-    spawn = Node(package="gazebo_ros", executable="spawn_entity.py", arguments=["-topic", "robot_description", "-entity", "ur5_rg2"], output="screen")
+    gazebo = IncludeLaunchDescription(PythonLaunchDescriptionSource([FindPackageShare("gazebo_ros"), "/launch", "/gazebo.launch.py"]), launch_arguments={"world": "/home/s/tossingbot_ws/src/ur5_rg2_ign/launch/empty_world.world"}.items())
+    spawn = Node(package="gazebo_ros", executable="spawn_entity.py", arguments=["-topic", "robot_description", "-entity", "ur5_rg2", "-x", "0.5", "-y", "0.0", "-z", "0.5"], output="screen")
     load_jsb = ExecuteProcess(cmd=["ros2", "control", "load_controller", "--set-state", "active", "joint_state_broadcaster"], output="screen")
     load_jtc = ExecuteProcess(cmd=["ros2", "control", "load_controller", "--set-state", "active", "joint_trajectory_controller"], output="screen")
     return LaunchDescription([
